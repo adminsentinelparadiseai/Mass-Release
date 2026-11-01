@@ -49,7 +49,7 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events
 .wrap{position:relative;z-index:10;max-width:1240px;margin:0 auto;padding:0 var(--gut)}
 .eyebrow{font:900 11px/1 Inter,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--tape);margin:0 0 16px}
 .h2{font:400 clamp(44px,6.4vw,84px)/.9 Anton,Impact,sans-serif;margin:0 0 18px;letter-spacing:.01em}
-h1{position:relative;font-family:Anton,Impact,sans-serif;font-weight:400;font-size:clamp(76px,13.5vw,212px);line-height:.84;margin:.06em 0 .14em -.03em;
+h1{position:relative;font-family:Anton,Impact,sans-serif;font-weight:400;font-size:clamp(58px,16.5vw,212px);line-height:.84;margin:.06em 0 .14em -.03em;
   text-shadow:-.025em 0 var(--red),.025em 0 var(--green);animation:jit 2.2s infinite}
 h1:before,h1:after{content:attr(data-t);position:absolute;inset:0}
 h1:before{color:var(--red);clip-path:inset(0 0 60% 0);animation:g1 1.7s infinite steps(2)}
@@ -77,6 +77,12 @@ h1:after{color:var(--green);clip-path:inset(55% 0 0 0);animation:g2 1.3s infinit
 .mug .cops{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 0 40%,rgba(255,31,61,.32),transparent 45%),radial-gradient(circle at 100% 40%,rgba(46,107,255,.32),transparent 45%);animation:copsw 1.1s steps(1) infinite}
 @keyframes copsw{50%{background:radial-gradient(circle at 0 40%,rgba(46,107,255,.32),transparent 45%),radial-gradient(circle at 100% 40%,rgba(255,31,61,.32),transparent 45%)}}
 .stamp2{position:absolute;right:10%;bottom:20%;transform:rotate(-6deg);font:400 clamp(22px,3vw,34px) Anton,Impact,sans-serif;letter-spacing:.08em;color:var(--red);border:4px solid var(--red);padding:2px 12px;background:rgba(0,0,0,.35);z-index:2}
+.coin{position:absolute;right:1%;top:3%;z-index:3;width:clamp(128px,15vw,168px);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px;text-align:center;color:#000;
+  background:radial-gradient(circle at 35% 30%,#c9ffe4,var(--green) 55%,#2fd47f);box-shadow:0 0 0 3px #000,0 0 0 5px var(--green),0 0 40px rgba(109,255,180,.6);transform:rotate(-12deg);animation:coin 6s ease-in-out infinite}
+.coin small{font:900 clamp(8px,.8vw,10px)/1.25 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.coin b{font:400 clamp(15px,1.7vw,19px)/.95 Anton,Impact,sans-serif;letter-spacing:.02em}
+.coin i{font:900 7px Inter,sans-serif;font-style:normal;letter-spacing:.2em}
+@keyframes coin{50%{transform:rotate(-6deg) translateY(-6px)}}
 @media (max-width:820px){
   .hero{grid-template-columns:1fr;min-height:0;padding-top:0}
   .hero .art{order:-1;margin:0 calc(var(--gut)*-1)}
@@ -183,6 +189,19 @@ audio{width:100%;margin-top:6px}
 .area51 .txt span{overflow-wrap:anywhere}
 .badge{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#1d1336,#07050d 70%);box-shadow:0 0 0 1px var(--hair),0 0 34px rgba(109,255,180,.18);transition:transform .3s}
 .area51 .disco-row a:hover .badge{transform:rotate(-8deg) scale(1.06)}
+.cat{margin-top:clamp(28px,4vw,44px)}
+.cat h3{font:900 11px/1 Inter,sans-serif;letter-spacing:.3em;color:var(--tape);margin:0 0 4px}
+.cat .note{font-size:11px;color:#6f6984;margin-top:10px}
+img.badge{object-fit:cover;display:block}
+.badge.mono{display:flex;align-items:center;justify-content:center;font:400 44px Anton,Impact,sans-serif;color:var(--green)}
+.txt .pitch{display:block;margin-top:6px;font:700 14px/1.4 Inter,sans-serif;color:var(--ink);letter-spacing:0;text-transform:none}
+.txt .code{display:inline-block;margin-top:8px;padding:5px 8px;font:900 10px Inter,sans-serif;letter-spacing:.2em;color:#000;background:var(--tape)}
+.vend-cta{margin-top:clamp(36px,5vw,56px);border-top:1px solid var(--hair);padding-top:22px;max-width:560px}
+.vend-cta summary{cursor:pointer;list-style:none;font-size:14px;color:var(--muted)}
+.vend-cta summary::-webkit-details-marker{display:none}
+.vend-cta summary b{color:var(--green)}
+select{width:100%;padding:12px 0;border:0;border-bottom:1px solid rgba(246,241,231,.28);background:transparent;color:var(--ink);font:700 17px Inter,sans-serif}
+select option{background:#000}
 footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-size:12px;line-height:1.7}
 .rules{margin-top:14px;max-width:720px}
 .rules summary{cursor:pointer;color:var(--muted)}
@@ -230,6 +249,7 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
         <div class="cops"></div>
       </div>
       <div class="stamp2">PRIME SUSPECT</div>
+      <div class="coin"><small>Everybody thought she was weird.</small><b>SHE JUST WASN'T FROM HERE.</b><i>★ EARTH ANGEL ★</i></div>
     </div>
   </div>
 </header>
@@ -344,19 +364,26 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
     </div>
   </section>
 
-  <section class="area51">
-    <p class="eyebrow">Area 51</p>
+  <section class="area51" id="arrival">
+    <p class="eyebrow">Area 51 · The Arrival Directory</p>
     <h2 class="h2">GET RIGHT FOR THE ARRIVAL</h2>
-    <p class="lede">Places to get your head in the right space before the visit.</p>
-    <div class="disco-row">
-      <a href="https://instagram.com/spacecadetsgummiezofficial" target="_blank" rel="noopener">
-        <svg class="badge" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="gum" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5fd2"/><stop offset="1" stop-color="#8a5cff"/></linearGradient></defs><g fill="#fff"><circle cx="18" cy="22" r="1.4"/><circle cx="82" cy="18" r="1.1"/><circle cx="86" cy="70" r="1.4"/><circle cx="12" cy="74" r="1"/></g><g fill="url(#gum)" opacity=".95"><circle cx="38" cy="30" r="7"/><circle cx="62" cy="30" r="7"/><circle cx="50" cy="40" r="15"/><ellipse cx="50" cy="66" rx="17" ry="19"/><ellipse cx="32" cy="58" rx="6" ry="9" transform="rotate(30 32 58)"/><ellipse cx="68" cy="58" rx="6" ry="9" transform="rotate(-30 68 58)"/><ellipse cx="40" cy="84" rx="7" ry="6"/><ellipse cx="60" cy="84" rx="7" ry="6"/></g><circle cx="50" cy="39" r="21" fill="rgba(160,230,255,.12)" stroke="#bfeaff" stroke-width="2.4"/><path d="M38 30a14 14 0 0 1 10-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".8"/><ellipse cx="46" cy="64" rx="5" ry="8" fill="#fff" opacity=".25"/></svg>
-        <div class="txt"><b>Space Cadets Gummiez</b><span>@spacecadetsgummiezofficial · Instagram →</span></div></a>
-      <a href="https://instagram.com/vtreez" target="_blank" rel="noopener">
-        <svg class="badge" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="tb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6dffb4" stop-opacity=".55"/><stop offset="1" stop-color="#6dffb4" stop-opacity="0"/></linearGradient></defs><polygon points="44,26 56,26 76,88 24,88" fill="url(#tb)"/><ellipse cx="50" cy="22" rx="20" ry="5" fill="#c2c7d3"/><ellipse cx="50" cy="18" rx="8" ry="6" fill="rgba(150,255,210,.6)" stroke="#d6ffe9"/><circle cx="40" cy="23" r="1.5" fill="#ffe27a"/><circle cx="50" cy="25" r="1.8" fill="#6dffb4"/><circle cx="60" cy="23" r="1.5" fill="#ffe27a"/><rect x="47" y="70" width="6" height="16" rx="2" fill="#7a4b2a"/><g fill="#2fd47f"><circle cx="50" cy="52" r="13"/><circle cx="38" cy="62" r="11"/><circle cx="62" cy="62" r="11"/><circle cx="50" cy="66" r="10"/></g><g fill="#8dffc4" opacity=".55"><circle cx="45" cy="47" r="4"/><circle cx="34" cy="58" r="3"/></g><path d="M20 88h60" stroke="#6dffb4" stroke-width="1.5" opacity=".5"/></svg>
-        <div class="txt"><b>VTREEZ</b><span>@vtreez · Instagram →</span></div></a>
-    </div>
-    <p class="fine" style="margin-top:14px">Adults 21+ only, where legal.</p>
+    <p class="lede">The visit is Fri 11.6. Here's where to get your fit, hair, face and head right before the mothership lands.</p>
+    <div id="vendorList"></div>
+    <details class="vend-cta">
+      <summary>Own a business? <b>Become a vendor for the arrival →</b></summary>
+      <form id="vendorForm" novalidate>
+        <label for="vBiz">Business name</label><input id="vBiz" type="text" maxlength="80" placeholder="What's it called">
+        <label for="vCat">What you do</label>
+        <select id="vCat"><option>Clothing / fits</option><option>Hair</option><option>Nails, lashes, makeup</option><option>Food</option><option>Rides / cars</option><option>Other</option></select>
+        <label for="vLink">Instagram or website</label><input id="vLink" type="text" maxlength="200" placeholder="@yourbusiness">
+        <label for="vName">Your name</label><input id="vName" type="text" maxlength="60" autocomplete="name">
+        <label for="vEmail">Email</label><input id="vEmail" type="email" autocomplete="email">
+        <label for="vPhone">Phone</label><input id="vPhone" type="tel" autocomplete="tel">
+        <label for="vMsg">Anything else</label><input id="vMsg" type="text" maxlength="600" placeholder="Optional">
+        <button type="submit" id="vGo">SEND INQUIRY</button>
+        <div class="err" id="vErr" role="alert"></div>
+      </form>
+    </details>
   </section>
 
   <section class="prod">
@@ -653,6 +680,55 @@ $("#share").addEventListener("click", async () => {
     else { await navigator.clipboard.writeText(url); $("#share").textContent = "LINK COPIED"; }
   } catch {}
 });
+// ---------- Arrival Directory: vendors come from the Vendors tab of the fan list sheet ----------
+const CATS = [["Fit","GET YOUR FIT RIGHT"],["Hair","GET YOUR HAIR RIGHT"],["Nails & Face","GET YOUR FACE RIGHT"],["Head","GET YOUR HEAD RIGHT"],["Eat","EAT BEFORE THE ARRIVAL"],["Ride","PULL UP RIGHT"]];
+const FALLBACK_VENDORS = [
+  {category:"Head", name:"Space Cadets Gummiez", pitch:"Lift off before the mothership lands.", link:"https://instagram.com/spacecadetsgummiezofficial", handle:"@spacecadetsgummiezofficial", logo:"badges/spacecadets.svg", code:""},
+  {category:"Head", name:"VTREEZ", pitch:"Get your head right for the visit.", link:"https://instagram.com/vtreez", handle:"@vtreez", logo:"badges/vtreez.svg", code:""}
+];
+const esc = s => String(s || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+const safeUrl = u => /^https?:\/\//i.test(u) || /^badges\/[\w.-]+$/.test(u) ? u : "";
+function renderVendors(list){
+  const groups = {};
+  list.forEach(v => (groups[v.category || "Other"] = groups[v.category || "Other"] || []).push(v));
+  const order = CATS.map(c => c[0]).concat(Object.keys(groups).filter(k => !CATS.some(c => c[0] === k)));
+  $("#vendorList").innerHTML = order.filter(k => groups[k]).map(k => {
+    const title = (CATS.find(c => c[0] === k) || [k, "GET RIGHT: " + k.toUpperCase()])[1];
+    return `<div class="cat"><h3>${esc(title)}</h3><div class="disco-row">${groups[k].map(v => {
+      const logo = safeUrl(v.logo), link = safeUrl(v.link);
+      const badge = logo ? `<img class="badge" src="${esc(logo)}" alt="" loading="lazy">` : `<div class="badge mono">${esc((v.name || "?")[0])}</div>`;
+      return `<a href="${esc(link)}" target="_blank" rel="noopener" data-vendor="${esc(v.name)}" data-cat="${esc(k)}">${badge}<div class="txt"><b>${esc(v.name)}</b>` +
+        (v.pitch ? `<span class="pitch">${esc(v.pitch)}</span>` : "") + `<span>${esc(v.handle || "Visit")} →</span>` +
+        (v.code ? `<span class="code">ARRIVAL CODE: ${esc(v.code)}</span>` : "") + `</div></a>`;
+    }).join("")}</div>${k === "Head" ? `<p class="note">Adults 21+ only, where legal.</p>` : ""}</div>`;
+  }).join("");
+}
+// every vendor click is logged in the Vendor Clicks tab, so you can show vendors their numbers
+$("#vendorList").addEventListener("click", e => {
+  const a = e.target.closest("a[data-vendor]");
+  if (!a || !CONFIG.SIGNUP_ENDPOINT.startsWith("http")) return;
+  try { navigator.sendBeacon(CONFIG.SIGNUP_ENDPOINT, new URLSearchParams({type:"click", vendor:a.dataset.vendor, category:a.dataset.cat, ref, page:location.href.split("?")[0]})); } catch {}
+});
+renderVendors(FALLBACK_VENDORS);
+if (CONFIG.SIGNUP_ENDPOINT.startsWith("http"))
+  fetch(CONFIG.SIGNUP_ENDPOINT + "?vendors=1").then(r => r.json()).then(j => { if (j.ok && j.vendors.length) renderVendors(j.vendors); }).catch(() => {});
+
+$("#vendorForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const biz = $("#vBiz").value.trim(), email = $("#vEmail").value.trim(), phone = $("#vPhone").value.trim(), err = $("#vErr");
+  err.textContent = "";
+  if (!biz) return err.textContent = "What's the business called?";
+  if (!email && !phone) return err.textContent = "Leave an email or phone so we can reach you.";
+  if (email && !emailOk(email)) return err.textContent = "That email doesn't look right.";
+  const btn = $("#vGo"); btn.disabled = true; btn.textContent = "SENDING…";
+  try {
+    if (CONFIG.SIGNUP_ENDPOINT.startsWith("http"))
+      await fetch(CONFIG.SIGNUP_ENDPOINT, {method:"POST", mode:"no-cors", body:new URLSearchParams({type:"vendor", business:biz, category:$("#vCat").value,
+        link:$("#vLink").value.trim(), name:$("#vName").value.trim(), email, phone:digits(phone), message:$("#vMsg").value.trim()})});
+    $("#vendorForm").innerHTML = `<p class="lede" style="margin-top:18px">Got it. We'll reach out about getting <b style="color:var(--ink)">${esc(biz)}</b> into the Arrival Directory.</p>`;
+  } catch { err.textContent = "Couldn't send. Check your signal and try again."; btn.disabled = false; btn.textContent = "SEND INQUIRY"; }
+});
+
 const saved = store.get("cldh_member");
 if (saved) { try { unlock(JSON.parse(saved)); } catch {} }
 </script>
