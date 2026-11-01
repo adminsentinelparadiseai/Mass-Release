@@ -105,11 +105,20 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
 .tag.a{left:8%;top:63%;color:var(--tape);border-color:var(--tape)}
 .tag.s{right:4%;top:4%;color:var(--red);border-color:var(--red);font-size:13px}
 .unlocked .tag.s{display:none}
-.prod{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;margin-top:26px}
-@media (max-width:560px){.prod{grid-template-columns:1fr;text-align:center}.prod .ph{margin:0 auto}}
-.prod .ph{position:relative;width:180px;height:180px;border-radius:50%;overflow:hidden;border:3px solid var(--tape);box-shadow:0 0 40px rgba(255,212,0,.35);background:#0b0914}
-.prod .ph img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
-.prod .ph svg{position:absolute;inset:0;width:100%;height:100%}
+.prod{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:30px;align-items:center;margin-top:40px}
+@media (max-width:640px){.prod{grid-template-columns:1fr;text-align:center}}
+.ev{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;border:4px solid #f3efe4;background:#0b0914;transform:rotate(-2deg);
+  box-shadow:0 0 0 1px #000,0 0 60px rgba(255,212,0,.25),0 30px 70px #000}
+.ev img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.12) saturate(.8)}
+.ev svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ev .muzzle{position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at var(--x,40%) var(--y,20%),rgba(255,240,200,.95),rgba(255,140,0,.35) 14%,transparent 45%)}
+.ev.hit{animation:evshake .25s}
+.ev.hit .muzzle{animation:flash .2s}
+@keyframes evshake{30%{transform:rotate(-2deg) translate(-6px,3px)}60%{transform:rotate(-2deg) translate(5px,-3px)}}
+.ev .stamp{position:absolute;left:10px;top:10px;font:900 11px Inter,sans-serif;letter-spacing:.18em;background:#000;color:var(--tape);border:2px solid var(--tape);padding:5px 8px}
+.ev .ts{position:absolute;left:12px;top:46px;font:700 12px ui-monospace,Menlo,monospace;color:#ffb347;text-shadow:0 0 6px rgba(255,140,0,.8)}
+.ev .live{position:absolute;width:20%;height:20%;transform:translate(-50%,-50%);pointer-events:none;transition:opacity 3s}
 .prod .k{font:900 12px Inter,sans-serif;letter-spacing:.3em;color:var(--tape)}
 .prod .n{font:400 clamp(40px,8vw,72px)/.95 Anton,Impact,sans-serif;text-shadow:-.03em 0 var(--red),.03em 0 var(--green)}
 #enter{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
@@ -176,14 +185,59 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
   </div>
 
   <section class="prod">
-    <div class="ph">
-      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#0b0914"/><circle cx="50" cy="38" r="17" fill="#2a2440"/><path d="M18 96c3-22 17-32 32-32s29 10 32 32z" fill="#2a2440"/><text x="50" y="44" text-anchor="middle" font-family="Anton,Impact" font-size="13" fill="#ffd400">KR8S</text></svg>
-      <img src="producer.jpg" alt="Traviskr8s" onerror="this.remove()">
+    <div class="ev" id="ev">
+      <img src="producer.jpg" alt="Traviskr8s slumped over the mixing board, staged as a crime scene">
+      <svg viewBox="0 0 1080 1080" aria-hidden="true">
+        <defs>
+          <g id="bh">
+            <path d="M0 0L-38 -14L-60 -10M0 0L-20 34L-26 58M0 0L30 30L52 34M0 0L36 -22L56 -40M0 0L4 -42L-6 -58M0 0L-44 18M0 0L44 4" stroke="rgba(255,255,255,.8)" stroke-width="2" fill="none"/>
+            <circle r="22" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+            <circle r="10" fill="#000" stroke="rgba(255,255,255,.85)" stroke-width="3"/>
+          </g>
+          <g id="tent"><path d="M-38 34L-26 -34H26L38 34Z" fill="#ffd400" stroke="#000" stroke-width="4"/></g>
+          <rect id="shell" x="-16" y="-6" width="32" height="12" rx="5" fill="#d9a441" stroke="#6b4a12" stroke-width="2"/>
+          <filter id="wet" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="3" seed="7"/>
+            <feDisplacementMap in="SourceGraphic" scale="38"/>
+          </filter>
+          <radialGradient id="pool" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#b3001b"/><stop offset=".7" stop-color="#6e000f"/><stop offset="1" stop-color="#3a0008"/></radialGradient>
+        </defs>
+        <!-- blood pooled under him on the board, plus spatter on the faders and rack -->
+        <g opacity=".93" filter="url(#wet)">
+          <path d="M110 1080C100 990 200 925 300 920C380 915 420 942 470 928C560 902 690 925 765 985C805 1020 825 1080 825 1080Z" fill="url(#pool)"/>
+          <path d="M455 975C470 1000 462 1040 470 1080H498C494 1040 500 1000 490 972Z" fill="#7a0011"/>
+          <path d="M10 640C60 610 150 640 172 700C188 760 122 805 60 795C18 785 -5 720 10 640Z" fill="url(#pool)"/>
+        </g>
+        <g fill="#8a0014">
+          <circle cx="40" cy="700" r="9"/><circle cx="150" cy="720" r="6"/><circle cx="185" cy="860" r="11"/><circle cx="25" cy="905" r="7"/>
+          <circle cx="230" cy="780" r="5"/><circle cx="90" cy="650" r="4"/><circle cx="260" cy="935" r="8"/><circle cx="560" cy="925" r="6"/>
+          <circle cx="400" cy="455" r="5"/><circle cx="352" cy="420" r="3"/><circle cx="420" cy="398" r="4"/><circle cx="240" cy="440" r="3"/>
+          <path d="M66 830Q70 880 62 920L70 921Q78 880 74 830Z"/><path d="M185 860Q188 900 183 940L190 940Q194 900 190 860Z"/>
+        </g>
+        <ellipse cx="520" cy="975" rx="140" ry="12" fill="rgba(255,255,255,.22)" transform="rotate(-6 520 975)"/><ellipse cx="80" cy="690" rx="45" ry="8" fill="rgba(255,255,255,.2)" transform="rotate(20 80 690)"/>
+        <use href="#bh" x="452" y="182" transform="scale(1)"/>
+        <use href="#bh" x="300" y="335"/>
+        <use href="#bh" x="935" y="135"/>
+        <use href="#bh" x="610" y="250"/>
+        <use href="#shell" x="200" y="905" transform="rotate(25 200 905)"/>
+        <use href="#shell" x="420" y="1045" transform="rotate(-40 420 1045)"/>
+        <use href="#shell" x="760" y="1010" transform="rotate(70 760 1010)"/>
+        <g transform="translate(120 870)"><use href="#tent"/><text y="22" text-anchor="middle" font-family="Anton,Impact" font-size="48" fill="#000">1</text></g>
+        <g transform="translate(345 1015)"><use href="#tent"/><text y="22" text-anchor="middle" font-family="Anton,Impact" font-size="48" fill="#000">2</text></g>
+        <g transform="translate(690 1030)"><use href="#tent"/><text y="22" text-anchor="middle" font-family="Anton,Impact" font-size="48" fill="#000">3</text></g>
+        <g transform="translate(905 175) rotate(40)">
+          <rect x="-520" y="-28" width="1040" height="56" fill="#ffd400"/>
+          <text y="10" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="26" letter-spacing="4" fill="#000">CRIME SCENE — DO NOT CROSS — STUDIO B — DO NOT CROSS</text>
+        </g>
+      </svg>
+      <div class="muzzle"></div>
+      <div class="stamp">EVIDENCE #KR8S</div>
+      <div class="ts">● REC 11.06 06:00PM</div>
     </div>
     <div>
-      <div class="k">ON THE BEAT</div>
+      <div class="k">ON THE BEAT · CASE FILE #KR8S</div>
       <div class="n">PROD. TRAVISKR8S</div>
-      <p style="color:var(--muted);margin:8px 0 0;line-height:1.5">The architect behind Hymn No. 1. Every gunshot, every siren, every bell in this church runs through his hands.</p>
+      <p style="color:var(--muted);margin:8px 0 0;line-height:1.5">Found face-down on the board at Studio B when the smoke cleared, the session still running. He went out on the beat. Last words on record: <b style="color:var(--ink)">"I don't get tired."</b> Every gunshot, every siren, every bell in this church ran through his hands.</p>
     </div>
   </section>
 
@@ -275,6 +329,19 @@ function visualShot(close){
   const fl = $("#flash"); fl.style.setProperty("--x", Math.random()*100+"%"); fl.style.setProperty("--y", Math.random()*100+"%");
   fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
   if (close){ document.body.classList.remove("shake"); void document.body.offsetWidth; document.body.classList.add("shake"); crack(); }
+  hitStudio();
+}
+// Each shot also lands in the studio photo, on the wall above the producer
+function hitStudio(){
+  const ev = $("#ev"), r = ev.getBoundingClientRect();
+  if (r.bottom < 0 || r.top > innerHeight) return;
+  const x = 6+Math.random()*88, y = 5+Math.random()*30;
+  ev.style.setProperty("--x", x+"%"); ev.style.setProperty("--y", y+"%");
+  ev.classList.remove("hit"); void ev.offsetWidth; ev.classList.add("hit");
+  const h = document.createElementNS("http://www.w3.org/2000/svg","svg"); h.setAttribute("viewBox","-60 -60 120 120"); h.setAttribute("class","live");
+  h.innerHTML = `<use href="#bh" transform="rotate(${Math.random()*360})"/>`;
+  h.style.left = x+"%"; h.style.top = y+"%"; ev.appendChild(h);
+  setTimeout(() => h.style.opacity = 0, 3000); setTimeout(() => h.remove(), 6200);
 }
 function crack(){
   const h = document.createElementNS("http://www.w3.org/2000/svg","svg"); h.setAttribute("viewBox","-60 -60 120 120"); h.setAttribute("class","hole");
