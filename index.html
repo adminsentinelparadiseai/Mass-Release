@@ -6,7 +6,9 @@
 <title>MASSACRE — Church of Latter-day Hoes</title>
 <meta property="og:title" content="BREAKING: MASSACRE">
 <meta property="og:description" content="UFO over Compton. Church is in session.">
-<meta property="og:image" content="cover.jpg">
+<meta property="og:image" content="https://adminsentinelparadiseai.github.io/Mass-Release/cover.jpg">
+<meta property="og:url" content="https://adminsentinelparadiseai.github.io/Mass-Release/">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -142,17 +144,7 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
 
   <div class="grid">
     <div class="scene">
-      <img src="golf.jpg" alt="The artist on the range as the visitor arrives">
-      <svg class="ov" viewBox="0 0 1332 1879" preserveAspectRatio="none" aria-hidden="true">
-        <defs><linearGradient id="bm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6dffb4" stop-opacity=".85"/><stop offset="1" stop-color="#6dffb4" stop-opacity=".08"/></linearGradient></defs>
-        <polygon class="beamfx" points="690,575 745,575 1060,1640 760,1640" fill="url(#bm)"/>
-        <g class="ufog">
-          <ellipse cx="718" cy="500" rx="70" ry="52" fill="rgba(150,255,210,.45)" stroke="#d6ffe9" stroke-width="5"/>
-          <ellipse cx="718" cy="485" rx="18" ry="22" fill="#6fcc7a"/><ellipse cx="711" cy="482" rx="6" ry="8" fill="#000"/><ellipse cx="726" cy="482" rx="6" ry="8" fill="#000"/>
-          <ellipse cx="718" cy="560" rx="190" ry="44" fill="#c2c7d3"/><ellipse cx="718" cy="545" rx="150" ry="18" fill="#f1f4f8"/>
-          <circle cx="600" cy="565" r="9" fill="#ffe27a"/><circle cx="718" cy="590" r="11" fill="#6dffb4"/><circle cx="836" cy="565" r="9" fill="#ffe27a"/>
-        </g>
-      </svg>
+      <img src="cover.jpg" alt="The artist golfing beside the transcendence creature as the UFO arrives">
       <div class="tag s">MEMBERS ONLY</div>
       <div class="tag a">↓ THE ARTIST</div>
       <div class="tag v">THE VISITOR ↓</div>
@@ -175,7 +167,7 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
         <label for="phone">Phone</label>
         <input id="phone" type="tel" autocomplete="tel" placeholder="(310) 555-0123">
         <label class="check"><input type="checkbox" id="optEmail" checked> Email me new hymns, drops and shows.</label>
-        <label class="check"><input type="checkbox" id="optSms"> Text me drops and shows. Msg &amp; data rates may apply. Reply STOP to opt out.</label>
+        <label class="check"><input type="checkbox" id="optSms"> Text me drops and shows from Church of Latter-day Hoes at the number above. Recurring automated texts. Consent isn't required to unlock anything. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</label>
         <button type="submit" id="go">UNLOCK THE DOORS</button>
         <div class="err" id="err" role="alert"></div>
         <div class="fine">We only use your info to tell you about this music. Never sold. Unsubscribe anytime.</div>
@@ -230,13 +222,14 @@ const CONFIG = {
 };
 /* ======================================================= */
 const $ = s => document.querySelector(s);
+const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
 $("#yr").textContent = new Date().getFullYear();
 $("#tape1").textContent = "CHURCH OF LATTER-DAY HOES — DO NOT CROSS — ".repeat(12);
 $("#tape2").textContent = "CRIME SCENE — MASSACRE — DO NOT CROSS — ".repeat(12);
 
 const params = new URLSearchParams(location.search);
-const ref = (params.get("ref") || localStorage.getItem("cldh_ref") || "direct").slice(0,40);
-if (params.get("ref")) localStorage.setItem("cldh_ref", ref);
+const ref = (params.get("ref") || store.get("cldh_ref") || "direct").slice(0,40);
+if (params.get("ref")) store.set("cldh_ref", ref);
 
 const fx = $("#fx"), g = fx.getContext("2d"); let P = [];
 function size(){ fx.width = innerWidth*devicePixelRatio; fx.height = innerHeight*devicePixelRatio;
@@ -316,7 +309,7 @@ $("#gate").addEventListener("submit", async e => {
   try {
     if (CONFIG.SIGNUP_ENDPOINT.startsWith("http")) await fetch(CONFIG.SIGNUP_ENDPOINT, {method:"POST", mode:"no-cors", body:data});
     const m = {name: name || "Member", no: memberNo(email || phone), joined: new Date().toISOString()};
-    localStorage.setItem("cldh_member", JSON.stringify(m)); burst(); unlock(m);
+    store.set("cldh_member", JSON.stringify(m)); burst(); unlock(m);
   } catch { err.textContent = "Couldn't connect. Check your signal and try again."; }
   finally { btn.disabled = false; btn.textContent = "UNLOCK THE DOORS"; }
 });
@@ -366,7 +359,7 @@ $("#share").addEventListener("click", async () => {
     else { await navigator.clipboard.writeText(url); $("#share").textContent = "LINK COPIED"; }
   } catch {}
 });
-const saved = localStorage.getItem("cldh_member");
+const saved = store.get("cldh_member");
 if (saved) { try { unlock(JSON.parse(saved)); } catch {} }
 </script>
 </body>
