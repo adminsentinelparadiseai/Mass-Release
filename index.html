@@ -277,7 +277,7 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
 <script>
 /* ================= CONFIG — edit these ================= */
 const CONFIG = {
-  SIGNUP_ENDPOINT: "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
+  SIGNUP_ENDPOINT: "https://script.google.com/macros/s/AKfycby6WZFM_8zM6BqXuADwhPX4MpJQUqLXzpXKKc8GzDK3cAvnSgo0zo2UAzVdIc_x_WGL/exec",
   YOUTUBE_ID: "",
   PREMIERE: "2026-11-06T18:00:00-08:00",
   LINKS: [
@@ -309,19 +309,57 @@ function loop(t){ g.clearRect(0,0,fx.width,fx.height);
   requestAnimationFrame(loop); }
 addEventListener("resize", size); size(); requestAnimationFrame(loop);
 
-let ac, master, sirenGain, muted = false, shotTimer;
+let ac, master, sirenGain, heliGain, muted = false, shotTimer, whoopTimer;
+const STREET_VOL = .18, HELI_VOL = .5;
+function setStreet(on){ if (sirenGain) sirenGain.gain.value = on ? STREET_VOL : 0; if (heliGain) heliGain.gain.value = on ? HELI_VOL : 0; }
+// Street bed: two blown-out squad car sirens (wail + yelp) passing by, "whoop" chirps, and a ghetto bird overhead
 function startAudio(){
   try {
     ac = new (window.AudioContext || window.webkitAudioContext)();
     master = ac.createGain(); master.gain.value = .55; master.connect(ac.destination);
-    const lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1400; lp.connect(master);
-    sirenGain = ac.createGain(); sirenGain.gain.value = .05; sirenGain.connect(lp);
-    const o = ac.createOscillator(); o.type = "triangle"; o.frequency.value = 800;
-    const lfo = ac.createOscillator(); lfo.frequency.value = .35; const lg = ac.createGain(); lg.gain.value = 320;
-    lfo.connect(lg); lg.connect(o.frequency); o.connect(sirenGain); o.start(); lfo.start();
+    const horn = ac.createBiquadFilter(); horn.type = "bandpass"; horn.frequency.value = 1300; horn.Q.value = .6; horn.connect(master);
+    const dirt = ac.createWaveShaper(), curve = new Float32Array(1024);
+    for (let i=0;i<1024;i++){ const x = i/512-1; curve[i] = (1+40)*x/(1+40*Math.abs(x)); }
+    dirt.curve = curve; dirt.connect(horn);
+    sirenGain = ac.createGain(); sirenGain.gain.value = STREET_VOL; sirenGain.connect(dirt);
+    const pan = v => { if (!ac.createStereoPanner) return null; const p = ac.createStereoPanner(); p.pan.value = v; return p; };
+    // a siren = oscillator swept by an LFO, with a slow swell so it sounds like it drives past
+    const siren = (type, base, depth, rate, swellRate, side) => {
+      const o = ac.createOscillator(); o.type = type; o.frequency.value = base;
+      const lfo = ac.createOscillator(); lfo.type = "triangle"; lfo.frequency.value = rate;
+      const lg = ac.createGain(); lg.gain.value = depth; lfo.connect(lg); lg.connect(o.frequency);
+      const g = ac.createGain(); g.gain.value = .5;
+      const sw = ac.createOscillator(); sw.frequency.value = swellRate; const sg = ac.createGain(); sg.gain.value = .45;
+      sw.connect(sg); sg.connect(g.gain);
+      const p = pan(side); o.connect(g); if (p) { g.connect(p); p.connect(sirenGain); } else g.connect(sirenGain);
+      o.start(); lfo.start(); sw.start();
+    };
+    siren("sawtooth", 1050, 420, .22, .045, -.6);  // wail
+    siren("square", 1000, 330, 3.3, .07, .6);      // yelp
+    siren("sawtooth", 1063, 420, .2, .045, -.5);   // detuned double on the wail for that cheap-speaker rasp
+    // helicopter: looped noise, low-passed, chopped by the rotor
+    const n = ac.sampleRate*2, b = ac.createBuffer(1,n,ac.sampleRate), d = b.getChannelData(0);
+    for (let i=0;i<n;i++) d[i] = Math.random()*2-1;
+    const heli = ac.createBufferSource(); heli.buffer = b; heli.loop = true;
+    const hf = ac.createBiquadFilter(); hf.type = "lowpass"; hf.frequency.value = 260;
+    const hg = ac.createGain(); hg.gain.value = .5;  // square rotor LFO swings this 0..1
+    const rotor = ac.createOscillator(); rotor.type = "square"; rotor.frequency.value = 11;
+    const rg = ac.createGain(); rg.gain.value = .5; rotor.connect(rg); rg.connect(hg.gain);
+    heliGain = ac.createGain(); heliGain.gain.value = HELI_VOL;
+    heli.connect(hf); hf.connect(hg); hg.connect(heliGain); heliGain.connect(master); heli.start(); rotor.start();
   } catch(e) {}
-  scheduleShots();
+  scheduleShots(); scheduleWhoop();
 }
+function whoop(){
+  if (!ac || muted) return;
+  for (let k=0;k<2;k++){
+    const t = ac.currentTime + k*.42, o = ac.createOscillator(), g = ac.createGain();
+    o.type = "sawtooth"; o.frequency.setValueAtTime(350,t); o.frequency.exponentialRampToValueAtTime(1700,t+.32);
+    g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.9,t+.04); g.gain.exponentialRampToValueAtTime(.0001,t+.38);
+    o.connect(g); g.connect(sirenGain); o.start(t); o.stop(t+.4);
+  }
+}
+function scheduleWhoop(){ clearTimeout(whoopTimer); whoopTimer = setTimeout(() => { whoop(); scheduleWhoop(); }, 6000 + Math.random()*12000); }
 function gunshot(vol){
   if (!ac || muted) return;
   const n = ac.sampleRate*.5, b = ac.createBuffer(1,n,ac.sampleRate), d = b.getChannelData(0);
@@ -369,9 +407,9 @@ $("#enter").addEventListener("click", () => {
 });
 $("#mute").addEventListener("click", () => {
   muted = !muted; $("#mute").textContent = muted ? "SOUND: OFF" : "SOUND: ON";
-  if (sirenGain) sirenGain.gain.value = muted ? 0 : .05;
+  setStreet(!muted);
 });
-$("#song").addEventListener("play", () => { muted = true; if (sirenGain) sirenGain.gain.value = 0; $("#mute").textContent = "SOUND: OFF"; });
+$("#song").addEventListener("play", () => { muted = true; setStreet(false); $("#mute").textContent = "SOUND: OFF"; });
 
 const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const digits = v => v.replace(/\D/g,"");
