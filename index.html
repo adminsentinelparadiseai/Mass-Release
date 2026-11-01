@@ -168,6 +168,12 @@ audio{width:100%;margin-top:6px}
 .ev .soul{fill:none;stroke:rgba(235,255,245,.95);stroke-width:18;stroke-linecap:round;stroke-dasharray:40 60;animation:rise 2.4s linear infinite}
 @keyframes rise{to{stroke-dashoffset:-200}}
 
+.disco{border-top:1px solid var(--hair);padding:clamp(40px,6vw,72px) 0}
+.disco-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));column-gap:clamp(20px,4vw,48px);margin-top:8px}
+.disco-row a{display:block;border-top:1px solid var(--hair);padding:24px 0;color:var(--ink);text-decoration:none}
+.disco-row a b{display:block;font:400 clamp(30px,4vw,44px)/1 Anton,Impact,sans-serif;transition:color .2s}
+.disco-row a span{display:block;margin-top:8px;font:900 10px Inter,sans-serif;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
+.disco-row a:hover b{color:var(--green)}
 footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-size:12px;line-height:1.7}
 .rules{margin-top:14px;max-width:720px}
 .rules summary{cursor:pointer;color:var(--muted)}
@@ -321,6 +327,14 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
 <div class="band r"><span id="tape2"></span></div>
 
 <div class="wrap">
+  <section class="disco">
+    <p class="eyebrow">More from Minister Energi</p>
+    <div class="disco-row">
+      <a href="https://www.youtube.com/playlist?list=OLAK5uy_kcGYJh76WHOjcxqZTRi8afZlSwrlTL7mA" target="_blank" rel="noopener"><b>Servin&amp;Surfin</b><span>EP · 3 songs · 2026 · Listen →</span></a>
+      <a href="https://www.youtube.com/playlist?list=OLAK5uy_nNo3CokAgD7lQTFCq11CjjUa1yl2A2MTY" target="_blank" rel="noopener"><b>Top G.O.L.F</b><span>Single · 2026 · Listen →</span></a>
+    </div>
+  </section>
+
   <section class="prod">
     <div class="ev" id="ev">
       <img src="producer.jpg" alt="Traviskr8s slumped over the mixing board, staged as a crime scene, with the transcendence creature watching over him">
@@ -399,11 +413,12 @@ const CONFIG = {
   YOUTUBE_ID: "",
   PREMIERE: "2026-11-06T18:00:00-08:00",
   // Your artist name for the PRIME SUSPECT spotlight ("" shows WANTED FOR MASSACRE)
-  ARTIST: "",
+  ARTIST: "Minister Energi",
   // Signup giveaway: drawn at the premiere
   GIVEAWAY: { PRIZE: "$50 gas card", WINNERS: 3 },
   LINKS: [
-    ["Instagram", "https://instagram.com/therealmarztrip"]
+    ["Instagram", "https://instagram.com/therealmarztrip"],
+    ["YouTube", "https://www.youtube.com/channel/UCeE1AmTf8RMsCrZK-8IWT3g"]
   ]
 };
 /* ======================================================= */
