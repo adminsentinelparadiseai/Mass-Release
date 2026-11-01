@@ -693,7 +693,7 @@ function renderVendors(list){
   list.forEach(v => (groups[v.category || "Other"] = groups[v.category || "Other"] || []).push(v));
   const order = CATS.map(c => c[0]).concat(Object.keys(groups).filter(k => !CATS.some(c => c[0] === k)));
   $("#vendorList").innerHTML = order.filter(k => groups[k]).map(k => {
-    const title = (CATS.find(c => c[0] === k) || [k, "GET RIGHT: " + k.toUpperCase()])[1];
+    const title = (CATS.find(c => c[0] === k) || [k, "ALSO GETTING YOU RIGHT"])[1];
     return `<div class="cat"><h3>${esc(title)}</h3><div class="disco-row">${groups[k].map(v => {
       const logo = safeUrl(v.logo), link = safeUrl(v.link);
       const badge = logo ? `<img class="badge" src="${esc(logo)}" alt="" loading="lazy">` : `<div class="badge mono">${esc((v.name || "?")[0])}</div>`;
