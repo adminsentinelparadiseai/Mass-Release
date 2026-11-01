@@ -95,10 +95,6 @@ h1:after{color:var(--green);clip-path:inset(55% 0 0 0);animation:g2 1.3s infinit
 .mug{position:relative;aspect-ratio:4/5;overflow:hidden;-webkit-mask-image:radial-gradient(ellipse 66% 60% at 50% 42%,#000 28%,rgba(0,0,0,.55) 56%,transparent 82%);mask-image:radial-gradient(ellipse 66% 60% at 50% 42%,#000 28%,rgba(0,0,0,.55) 56%,transparent 82%)}
 .mug img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(1.03) contrast(1.02);animation:push 14s ease-in-out infinite alternate}
 /* earth angel: soft bloom, pastel light, halo, floating sparkles */
-.mug .ref .glint{transform-box:fill-box;transform-origin:center;opacity:0;animation:glint 2.6s ease-in-out infinite}
-.mug .ref g:nth-of-type(3n) .glint{animation-delay:.9s}.mug .ref g:nth-of-type(3n+1) .glint{animation-delay:1.7s}
-@keyframes glint{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:.95;transform:scale(1)}}
-.mug .ref{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;animation:push 14s ease-in-out infinite alternate}
 .mug img.bloom{position:absolute;inset:0;filter:blur(16px) brightness(1.05) saturate(1.15);mix-blend-mode:screen;opacity:.28}
 .mug .aura{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(ellipse at 50% 34%,rgba(255,246,228,.3),transparent 50%),linear-gradient(160deg,rgba(255,190,232,.4),rgba(190,220,255,.3) 55%,rgba(255,236,190,.35));animation:aura 9s ease-in-out infinite alternate}
 @keyframes aura{to{filter:hue-rotate(28deg)}}
@@ -289,26 +285,6 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
         <img src="artist.jpg" alt="Minister Energi, the earth angel">
         <img class="bloom" src="artist.jpg" alt="">
         <div class="aura"></div>
-        <!-- the jewelry: iced-out gold referee whistle on a gold chain -->
-        <svg class="ref" viewBox="0 0 1152 1440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4c2"/><stop offset=".3" stop-color="#f5c542"/><stop offset=".62" stop-color="#a6741a"/><stop offset="1" stop-color="#f7d670"/></linearGradient>
-            <radialGradient id="goldBall" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff6cf"/><stop offset=".4" stop-color="#f2c23c"/><stop offset=".8" stop-color="#9a6a14"/><stop offset="1" stop-color="#5c3d06"/></radialGradient>
-            <radialGradient id="ice" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e4f3ff"/><stop offset="1" stop-color="#8fb4d6"/></radialGradient>
-            <filter id="wshadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#000" flood-opacity=".55"/></filter>
-            <filter id="bling"><feGaussianBlur stdDeviation="3"/></filter>
-          </defs>
-          <path d="M770 860C760 960 700 1060 640 1180C610 1250 600 1340 610 1440" fill="none" stroke="#7a5410" stroke-width="18" stroke-linecap="round"/>
-          <path d="M770 860C760 960 700 1060 640 1180C610 1250 600 1340 610 1440" fill="none" stroke="url(#gold)" stroke-width="14" stroke-dasharray="16 6" stroke-linecap="round"/>
-          <g filter="url(#wshadow)" transform="translate(6 -26) rotate(20 600 712)">
-            <ellipse cx="566" cy="713" rx="16" ry="22" fill="#2a0f08" opacity=".75"/>
-            <rect x="572" y="692" width="158" height="42" rx="12" fill="url(#gold)" stroke="#5c3d06" stroke-width="3"/>
-            <circle cx="790" cy="740" r="86" fill="url(#goldBall)" stroke="#5c3d06" stroke-width="3"/>
-            <rect x="712" y="676" width="80" height="22" rx="6" fill="#3a2604"/>
-            <circle cx="850" cy="800" r="12" fill="none" stroke="#f5c542" stroke-width="7"/>
-            <g transform="translate(600.0 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(613.5 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(626.9 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(640.4 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(653.8 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(667.3 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(680.8 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(694.2 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(707.7 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(721.2 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(734.6 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(748.1 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(761.5 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(775.0 713)"><circle r="9" fill="url(#ice)"/><path d="M0 -19.8L2.25 0L0 19.8L-2.25 0Z M-19.8 0L0 2.25L19.8 0L0 -2.25Z" fill="#fff" class="glint"/></g><g transform="translate(856.0 740.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(851.0 765.3)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(836.7 786.7)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(815.3 801.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(790.0 806.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(764.7 801.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(743.3 786.7)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(729.0 765.3)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(724.0 740.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(729.0 714.7)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(743.3 693.3)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(764.7 679.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(790.0 674.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(815.3 679.0)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(836.7 693.3)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(851.0 714.7)"><circle r="11" fill="url(#ice)"/><path d="M0 -24.200000000000003L2.75 0L0 24.200000000000003L-2.75 0Z M-24.200000000000003 0L0 2.75L24.200000000000003 0L0 -2.75Z" fill="#fff" class="glint"/></g><g transform="translate(790 740)"><circle r="26" fill="url(#ice)"/><path d="M0 -57.2L6.5 0L0 57.2L-6.5 0Z M-57.2 0L0 6.5L57.2 0L0 -6.5Z" fill="#fff" class="glint"/></g>
-          </g>
-        </svg>
       </div>
       <div class="stamp2">PRIME SUSPECT</div>
       <div class="coin"><small>Everybody thought she was weird.</small><b>SHE JUST WASN'T FROM HERE.</b><i>★ EARTH ANGEL ★</i></div>
@@ -570,7 +546,7 @@ addEventListener("resize", size); size(); requestAnimationFrame(loop);
 let ac, master, sirenGain, heliGain, muted = false, shotTimer, whoopTimer;
 // Background beat (Nip Hot Record, prod. Sir.Hollywood): sped up a touch with extra low end, under the sirens
 const bed = new Audio("beat.m4a"); bed.loop = true; bed.preload = "auto"; bed.preservesPitch = bed.mozPreservesPitch = bed.webkitPreservesPitch = false;
-const BED_RATE = 1.08, BED_VOL = .8;
+const BED_RATE = 1.08, BED_VOL = 1;
 function startBed(){
   try {
     const src = ac.createMediaElementSource(bed), low = ac.createBiquadFilter(), g = ac.createGain();
@@ -579,13 +555,13 @@ function startBed(){
   } catch (e) {}
   bed.playbackRate = BED_RATE; bed.play().catch(() => {});
 }
-const STREET_VOL = .18, HELI_VOL = .5;
+const STREET_VOL = .05, HELI_VOL = .14;
 function setStreet(on){ if (sirenGain) sirenGain.gain.value = on ? STREET_VOL : 0; if (heliGain) heliGain.gain.value = on ? HELI_VOL : 0; }
 // Street bed: two blown-out squad car sirens (wail + yelp) passing by, "whoop" chirps, and a ghetto bird overhead
 function startAudio(){
   try {
     ac = new (window.AudioContext || window.webkitAudioContext)();
-    master = ac.createGain(); master.gain.value = .55; master.connect(ac.destination);
+    master = ac.createGain(); master.gain.value = .3; master.connect(ac.destination);
     const horn = ac.createBiquadFilter(); horn.type = "bandpass"; horn.frequency.value = 1300; horn.Q.value = .6; horn.connect(master);
     const dirt = ac.createWaveShaper(), curve = new Float32Array(1024);
     for (let i=0;i<1024;i++){ const x = i/512-1; curve[i] = (1+40)*x/(1+40*Math.abs(x)); }
