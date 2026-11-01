@@ -101,15 +101,15 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
 @keyframes bob{50%{transform:translateY(-14px)}}
 .scene:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px);pointer-events:none}
 .tag{position:absolute;font:900 11px Inter,sans-serif;letter-spacing:.16em;background:#000;color:var(--green);border:2px solid var(--green);padding:5px 8px;white-space:nowrap;z-index:2}
-.tag.v{left:55%;top:66%;animation:fade 1.2s infinite alternate}
-.tag.a{left:8%;top:63%;color:var(--tape);border-color:var(--tape)}
+.tag.v{right:4%;top:56%;animation:fade 1.2s infinite alternate}
 .tag.s{right:4%;top:4%;color:var(--red);border-color:var(--red);font-size:13px}
 .unlocked .tag.s{display:none}
-.prod{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:30px;align-items:center;margin-top:40px}
-@media (max-width:640px){.prod{grid-template-columns:1fr;text-align:center}}
+.prod{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:26px;align-items:center;margin-top:36px}
+@media (max-width:640px){.prod{grid-template-columns:1fr;text-align:center}.prod .ev{width:min(280px,80%);margin:0 auto}}
 .ev{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;border:4px solid #f3efe4;background:#0b0914;transform:rotate(-2deg);
-  box-shadow:0 0 0 1px #000,0 0 60px rgba(255,212,0,.25),0 30px 70px #000}
-.ev img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.12) saturate(.8)}
+  box-shadow:0 0 0 1px #000,0 24px 60px rgba(0,0,0,.85)}
+.ev:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 45% 55%,transparent 45%,rgba(0,0,0,.55))}
+.ev img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.7) sepia(.08)}
 .ev svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .ev .muzzle{position:absolute;inset:0;pointer-events:none;opacity:0;
   background:radial-gradient(circle at var(--x,40%) var(--y,20%),rgba(255,240,200,.95),rgba(255,140,0,.35) 14%,transparent 45%)}
@@ -117,17 +117,17 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
 .ev.hit .muzzle{animation:flash .2s}
 @keyframes evshake{30%{transform:rotate(-2deg) translate(-6px,3px)}60%{transform:rotate(-2deg) translate(5px,-3px)}}
 .ev .stamp{position:absolute;left:10px;top:10px;font:900 11px Inter,sans-serif;letter-spacing:.18em;background:#000;color:var(--tape);border:2px solid var(--tape);padding:5px 8px}
-.ev .ts{position:absolute;left:12px;top:46px;font:700 12px ui-monospace,Menlo,monospace;color:#ffb347;text-shadow:0 0 6px rgba(255,140,0,.8)}
+.ev .ts{position:absolute;left:12px;top:46px;font:700 12px ui-monospace,Menlo,monospace;color:rgba(240,228,200,.8)}
 .ev .live{position:absolute;width:20%;height:20%;transform:translate(-50%,-50%);pointer-events:none;transition:opacity 3s}
-.ev .guardian{position:absolute;right:4%;top:20%;width:24%;aspect-ratio:26/30;border-radius:50%;overflow:hidden;pointer-events:none;opacity:.9;
-  animation:watch 5s ease-in-out infinite;box-shadow:0 0 34px 12px rgba(109,255,180,.5)}
+.ev .guardian{position:absolute;right:4%;top:20%;width:24%;aspect-ratio:26/30;border-radius:50%;overflow:hidden;pointer-events:none;opacity:.75;
+  animation:watch 5s ease-in-out infinite;box-shadow:0 0 26px 6px rgba(200,255,230,.2)}
 .ev .guardian img{filter:brightness(1.12) saturate(.6)}
-.ev .guardian:after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 26px 12px rgba(170,255,215,.75)}
+.ev .guardian:after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 24px 14px rgba(20,24,22,.55)}
 @keyframes watch{50%{transform:translateY(-8px)}}
 .ev .soul{fill:none;stroke:rgba(235,255,245,.95);stroke-width:18;stroke-linecap:round;stroke-dasharray:40 60;animation:rise 2.4s linear infinite}
 @keyframes rise{to{stroke-dashoffset:-200}}
 .prod .k{font:900 12px Inter,sans-serif;letter-spacing:.3em;color:var(--tape)}
-.prod .n{font:400 clamp(40px,8vw,72px)/.95 Anton,Impact,sans-serif;text-shadow:-.03em 0 var(--red),.03em 0 var(--green)}
+.prod .n{font:400 clamp(30px,5vw,46px)/.95 Anton,Impact,sans-serif;text-shadow:-.03em 0 var(--red),.03em 0 var(--green)}
 #enter{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
   background:radial-gradient(circle at 50% 40%,rgba(255,31,61,.3),transparent 60%),#000;cursor:pointer}
 #enter .bn{background:var(--red);font:900 clamp(16px,3vw,22px) Inter,sans-serif;letter-spacing:.2em;padding:8px 16px;animation:blink 1s steps(1) infinite}
@@ -162,7 +162,6 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
     <div class="scene">
       <img src="cover.jpg" alt="The artist golfing beside the transcendence creature as the UFO arrives">
       <div class="tag s">MEMBERS ONLY</div>
-      <div class="tag a">↓ THE ARTIST</div>
       <div class="tag v">THE VISITOR ↓</div>
     </div>
     <div>
@@ -208,21 +207,21 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
             <feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="3" seed="7"/>
             <feDisplacementMap in="SourceGraphic" scale="38"/>
           </filter>
-          <radialGradient id="pool" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#b3001b"/><stop offset=".7" stop-color="#6e000f"/><stop offset="1" stop-color="#3a0008"/></radialGradient>
+          <radialGradient id="pool" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#6a0a10"/><stop offset=".7" stop-color="#3e0509"/><stop offset="1" stop-color="#200204"/></radialGradient>
         </defs>
         <!-- blood pooled under him on the board, plus spatter on the faders and rack -->
-        <g opacity=".93" filter="url(#wet)">
+        <g opacity=".82" filter="url(#wet)">
           <path d="M110 1080C100 990 200 925 300 920C380 915 420 942 470 928C560 902 690 925 765 985C805 1020 825 1080 825 1080Z" fill="url(#pool)"/>
-          <path d="M455 975C470 1000 462 1040 470 1080H498C494 1040 500 1000 490 972Z" fill="#7a0011"/>
+          <path d="M455 975C470 1000 462 1040 470 1080H498C494 1040 500 1000 490 972Z" fill="#45050a"/>
           <path d="M10 640C60 610 150 640 172 700C188 760 122 805 60 795C18 785 -5 720 10 640Z" fill="url(#pool)"/>
         </g>
-        <g fill="#8a0014">
+        <g fill="#4e060b" opacity=".85">
           <circle cx="40" cy="700" r="9"/><circle cx="150" cy="720" r="6"/><circle cx="185" cy="860" r="11"/><circle cx="25" cy="905" r="7"/>
           <circle cx="230" cy="780" r="5"/><circle cx="90" cy="650" r="4"/><circle cx="260" cy="935" r="8"/><circle cx="560" cy="925" r="6"/>
           <circle cx="400" cy="455" r="5"/><circle cx="352" cy="420" r="3"/><circle cx="420" cy="398" r="4"/><circle cx="240" cy="440" r="3"/>
           <path d="M66 830Q70 880 62 920L70 921Q78 880 74 830Z"/><path d="M185 860Q188 900 183 940L190 940Q194 900 190 860Z"/>
         </g>
-        <ellipse cx="520" cy="975" rx="140" ry="12" fill="rgba(255,255,255,.22)" transform="rotate(-6 520 975)"/><ellipse cx="80" cy="690" rx="45" ry="8" fill="rgba(255,255,255,.2)" transform="rotate(20 80 690)"/>
+        
         <use href="#bh" x="452" y="182" transform="scale(1)"/>
         <use href="#bh" x="300" y="335"/>
         <use href="#bh" x="935" y="135"/>
