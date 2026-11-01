@@ -568,6 +568,17 @@ function loop(t){ g.clearRect(0,0,fx.width,fx.height);
 addEventListener("resize", size); size(); requestAnimationFrame(loop);
 
 let ac, master, sirenGain, heliGain, muted = false, shotTimer, whoopTimer;
+// Background beat (Nip Hot Record, prod. Sir.Hollywood): sped up a touch with extra low end, under the sirens
+const bed = new Audio("beat.m4a"); bed.loop = true; bed.preload = "auto"; bed.preservesPitch = bed.mozPreservesPitch = bed.webkitPreservesPitch = false;
+const BED_RATE = 1.08, BED_VOL = .8;
+function startBed(){
+  try {
+    const src = ac.createMediaElementSource(bed), low = ac.createBiquadFilter(), g = ac.createGain();
+    low.type = "lowshelf"; low.frequency.value = 120; low.gain.value = 5; g.gain.value = BED_VOL;
+    src.connect(low); low.connect(g); g.connect(ac.destination);
+  } catch (e) {}
+  bed.playbackRate = BED_RATE; bed.play().catch(() => {});
+}
 const STREET_VOL = .18, HELI_VOL = .5;
 function setStreet(on){ if (sirenGain) sirenGain.gain.value = on ? STREET_VOL : 0; if (heliGain) heliGain.gain.value = on ? HELI_VOL : 0; }
 // Street bed: two blown-out squad car sirens (wail + yelp) passing by, "whoop" chirps, and a ghetto bird overhead
@@ -661,13 +672,14 @@ function crack(){
   setTimeout(() => h.style.opacity = 0, 1500); setTimeout(() => h.remove(), 4200);
 }
 $("#enter").addEventListener("click", () => {
-  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); setTimeout(burst, 600);
+  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); startBed(); setTimeout(burst, 600);
 });
 $("#mute").addEventListener("click", () => {
   muted = !muted; $("#mute").textContent = muted ? "SOUND: OFF" : "SOUND: ON";
   setStreet(!muted);
+  if (muted) bed.pause(); else { bed.playbackRate = BED_RATE; bed.play().catch(() => {}); }
 });
-$("#song").addEventListener("play", () => { muted = true; setStreet(false); $("#mute").textContent = "SOUND: OFF"; });
+$("#song").addEventListener("play", () => { muted = true; setStreet(false); bed.pause(); $("#mute").textContent = "SOUND: OFF"; });
 
 const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const digits = v => v.replace(/\D/g,"");
