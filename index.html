@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MASSACRE — Church of Latter-day Hoes</title>
+<meta property="og:title" content="BREAKING: MASSACRE">
+<meta property="og:description" content="UFO over Compton. Church is in session.">
+<meta property="og:image" content="cover.jpg">
+<meta name="theme-color" content="#000">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f6f1e7;--red:#ff1f3d;--blue:#2e6bff;--green:#6dffb4;--tape:#ffd400;--muted:#b4adc4;--line:#2a2440}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+body.shake{animation:shake .25s}
+@keyframes shake{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-3px,-2px)}80%{transform:translate(2px,3px)}}
+.lights{position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen}
+.lights:before,.lights:after{content:"";position:absolute;top:-20%;width:70%;height:140%;filter:blur(60px);opacity:0;animation:cop 1.1s infinite}
+.lights:before{left:-20%;background:radial-gradient(closest-side,var(--red),transparent)}
+.lights:after{right:-20%;background:radial-gradient(closest-side,var(--blue),transparent);animation-delay:.55s}
+@keyframes cop{0%,40%{opacity:.55}50%,100%{opacity:0}}
+.beam{position:fixed;top:-10%;left:50%;width:520px;height:130%;z-index:0;pointer-events:none;transform-origin:50% 0;
+  background:linear-gradient(180deg,rgba(109,255,180,.35),rgba(109,255,180,0) 85%);clip-path:polygon(45% 0,55% 0,100% 100%,0 100%);
+  animation:sweep 7s ease-in-out infinite;mix-blend-mode:screen}
+@keyframes sweep{0%,100%{transform:translateX(-50%) rotate(-28deg)}50%{transform:translateX(-50%) rotate(28deg)}}
+canvas#fx{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.flash{position:fixed;inset:0;z-index:50;pointer-events:none;background:radial-gradient(circle at var(--x) var(--y),rgba(255,230,180,.9),rgba(255,120,0,.25) 18%,transparent 40%);opacity:0}
+.flash.on{animation:flash .18s}
+@keyframes flash{0%{opacity:1}100%{opacity:0}}
+.hole{position:fixed;z-index:60;width:120px;height:120px;pointer-events:none;opacity:.9;transition:opacity 2.5s}
+.tape{position:fixed;left:-10%;width:120%;z-index:40;background:var(--tape);color:#000;font:900 15px/1 Inter,sans-serif;letter-spacing:.18em;
+  white-space:nowrap;overflow:hidden;padding:9px 0;box-shadow:0 6px 20px rgba(0,0,0,.6);pointer-events:none}
+.tape span{display:inline-block;animation:crawl 22s linear infinite}
+.tape.t1{top:10px;transform:rotate(-2deg)}
+.tape.t2{bottom:14px;transform:rotate(1.5deg)}
+.tape.t2 span{animation-direction:reverse}
+@keyframes crawl{to{transform:translateX(-50%)}}
+.ticker{position:sticky;top:0;z-index:30;display:flex;background:#000;border-bottom:2px solid var(--red);font-weight:900;font-size:14px;text-transform:uppercase}
+.ticker b{background:var(--red);padding:10px 14px;white-space:nowrap;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{background:#a00014}}
+.ticker div{overflow:hidden;white-space:nowrap;flex:1;padding:10px 0}
+.ticker div span{display:inline-block;padding-left:100%;animation:tick 26s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
+.wrap{position:relative;z-index:10;max-width:1000px;margin:0 auto;padding:60px 18px 90px}
+h1{position:relative;font-family:Anton,Impact,sans-serif;font-weight:400;font-size:clamp(58px,16vw,190px);line-height:.88;margin:10px 0 4px;text-align:center;
+  text-shadow:-.03em 0 var(--red),.03em 0 var(--green);animation:jit 2.2s infinite}
+h1:before,h1:after{content:attr(data-t);position:absolute;inset:0;background:transparent}
+h1:before{color:var(--red);clip-path:inset(0 0 60% 0);animation:g1 1.7s infinite steps(2)}
+h1:after{color:var(--green);clip-path:inset(55% 0 0 0);animation:g2 1.3s infinite steps(2)}
+@keyframes g1{0%,89%,100%{opacity:0;transform:none}90%{opacity:1;transform:translate(-8px,-2px)}96%{opacity:1;transform:translate(6px,1px)}}
+@keyframes g2{0%,84%,100%{opacity:0;transform:none}86%{opacity:1;transform:translate(9px,2px)}94%{opacity:1;transform:translate(-5px,0)}}
+@keyframes jit{0%,96%{transform:none}97%{transform:skewX(-8deg)}99%{transform:skewX(6deg)}}
+.sub{text-align:center;font-weight:900;letter-spacing:.3em;text-transform:uppercase;font-size:13px;color:var(--tape);margin-bottom:26px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.unlocked .grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
+@media (max-width:760px){.grid,.unlocked .grid{grid-template-columns:1fr}}
+.card{background:rgba(10,8,18,.9);border:2px solid var(--line);border-radius:16px;padding:24px;backdrop-filter:blur(6px)}
+.card h2{font-family:Anton,Impact,sans-serif;font-weight:400;font-size:36px;margin:0 0 6px}
+.card p{color:var(--muted);margin:0 0 14px;line-height:1.5}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
+input[type=text],input[type=email],input[type=tel]{width:100%;padding:15px;border-radius:10px;border:2px solid var(--line);background:#07060c;color:var(--ink);font-size:16px}
+input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(109,255,180,.2)}
+.or{text-align:center;color:var(--muted);font-size:12px;margin-top:10px;letter-spacing:.2em}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:400;letter-spacing:0;text-transform:none;line-height:1.4}
+.check input{margin-top:2px;accent-color:var(--green);width:18px;height:18px;flex:none}
+button{appearance:none;border:0;cursor:pointer;font:400 24px Anton,Impact,sans-serif;letter-spacing:.08em;padding:17px;border-radius:12px;width:100%;margin-top:16px;
+  color:#000;background:linear-gradient(90deg,var(--green),#b9ffda,var(--green));background-size:200%;animation:shine 2s linear infinite,pulse 1.6s infinite}
+@keyframes shine{to{background-position:-200% 0}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(109,255,180,.7)}70%{box-shadow:0 0 0 18px rgba(109,255,180,0)}}
+button.ghost{background:transparent;color:var(--ink);border:2px solid var(--line);animation:none;font-size:18px}
+button:disabled{opacity:.6}
+.err{color:#ff7a8a;font-size:14px;font-weight:700;min-height:20px;margin-top:10px}
+.fine{font-size:11px;color:#7d7790;margin-top:12px;line-height:1.5}
+.player,.vault{display:none}.unlocked .player,.unlocked .vault{display:block}.unlocked .gate{display:none}
+.vault{margin-top:28px}
+.block{margin-top:24px}
+.block h3{font-family:Anton,Impact,sans-serif;font-weight:400;font-size:30px;margin:0 0 12px}
+audio{width:100%}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.links a{color:var(--ink);text-decoration:none;border:2px solid var(--line);padding:10px 14px;border-radius:999px;font-weight:700;font-size:14px}
+.links a:hover{border-color:var(--green);color:var(--green)}
+.video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#000}
+.video iframe,.video video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  background:radial-gradient(circle at 50% 35%,rgba(109,255,180,.3),transparent 55%),#030207}
+.soon .t{font:400 clamp(30px,7vw,64px) Anton,Impact,sans-serif}
+.soon .c{font-weight:900;color:var(--green);font-size:clamp(20px,4.5vw,34px);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.member{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+@media (max-width:760px){.member{grid-template-columns:1fr}}
+#cardPreview{width:100%;border-radius:12px;border:2px solid var(--line)}
+footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-height:1.6}
+.scene{position:relative;border-radius:16px;overflow:hidden;border:2px solid var(--line);box-shadow:0 0 70px rgba(109,255,180,.3),0 30px 80px #000}
+.scene img{display:block;width:100%}
+.scene svg.ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.scene .beamfx{animation:beamp 2.6s ease-in-out infinite}
+@keyframes beamp{50%{opacity:.35}}
+.scene .ufog{animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px)}}
+.scene:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px);pointer-events:none}
+.tag{position:absolute;font:900 11px Inter,sans-serif;letter-spacing:.16em;background:#000;color:var(--green);border:2px solid var(--green);padding:5px 8px;white-space:nowrap;z-index:2}
+.tag.v{left:55%;top:66%;animation:fade 1.2s infinite alternate}
+.tag.a{left:8%;top:63%;color:var(--tape);border-color:var(--tape)}
+.tag.s{right:4%;top:4%;color:var(--red);border-color:var(--red);font-size:13px}
+.unlocked .tag.s{display:none}
+.prod{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;margin-top:26px}
+@media (max-width:560px){.prod{grid-template-columns:1fr;text-align:center}.prod .ph{margin:0 auto}}
+.prod .ph{position:relative;width:180px;height:180px;border-radius:50%;overflow:hidden;border:3px solid var(--tape);box-shadow:0 0 40px rgba(255,212,0,.35);background:#0b0914}
+.prod .ph img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
+.prod .ph svg{position:absolute;inset:0;width:100%;height:100%}
+.prod .k{font:900 12px Inter,sans-serif;letter-spacing:.3em;color:var(--tape)}
+.prod .n{font:400 clamp(40px,8vw,72px)/.95 Anton,Impact,sans-serif;text-shadow:-.03em 0 var(--red),.03em 0 var(--green)}
+#enter{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
+  background:radial-gradient(circle at 50% 40%,rgba(255,31,61,.3),transparent 60%),#000;cursor:pointer}
+#enter .bn{background:var(--red);font:900 clamp(16px,3vw,22px) Inter,sans-serif;letter-spacing:.2em;padding:8px 16px;animation:blink 1s steps(1) infinite}
+#enter .hl{font:400 clamp(40px,10vw,110px)/.9 Anton,Impact,sans-serif;max-width:900px;padding:0 16px}
+#enter .tap{font-weight:900;letter-spacing:.3em;color:var(--green);animation:fade 1.2s infinite alternate}
+@keyframes fade{to{opacity:.3}}
+#mute{position:fixed;right:14px;bottom:64px;z-index:45;width:auto;margin:0;padding:10px 14px;font:900 12px Inter,sans-serif;letter-spacing:.15em;border-radius:999px;background:#000;color:var(--ink);border:2px solid var(--line);animation:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body class="locked">
+<div class="lights"></div>
+<div class="beam"></div>
+<canvas id="fx"></canvas>
+<div class="flash" id="flash"></div>
+<div class="tape t1"><span id="tape1"></span></div>
+<div class="tape t2"><span id="tape2"></span></div>
+
+<div id="enter">
+  <div class="bn">● BREAKING NEWS</div>
+  <div class="hl">UFO OVER COMPTON. SHOTS FIRED. CHURCH IS IN SESSION.</div>
+  <div class="tap">TAP TO ENTER · SOUND ON</div>
+</div>
+
+<div class="ticker"><b>● LIVE</b><div><span>BREAKING: UNIDENTIFIED CRAFT HOVERING OVER E. ALONDRA BLVD &nbsp;•&nbsp; WITNESSES REPORT GREEN LIGHTS AND GUNFIRE &nbsp;•&nbsp; "MASSACRE" OUT NOW ON ALL PLATFORMS &nbsp;•&nbsp; THE VISUAL DROPS FRI 11.6 &nbsp;•&nbsp; AUTHORITIES URGE RESIDENTS TO JOIN THE CONGREGATION &nbsp;•&nbsp; PRODUCED BY TRAVISKR8S &nbsp;•&nbsp; CHURCH OF LATTER-DAY HOES &nbsp;•&nbsp;</span></div></div>
+
+<div class="wrap">
+  <h1 data-t="MASSACRE">MASSACRE</h1>
+  <div class="sub">Hymn No. 1 · Out now · Visual Fri 11.6</div>
+
+  <div class="grid">
+    <div class="scene">
+      <img src="golf.jpg" alt="The artist on the range as the visitor arrives">
+      <svg class="ov" viewBox="0 0 1332 1879" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="bm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6dffb4" stop-opacity=".85"/><stop offset="1" stop-color="#6dffb4" stop-opacity=".08"/></linearGradient></defs>
+        <polygon class="beamfx" points="690,575 745,575 1060,1640 760,1640" fill="url(#bm)"/>
+        <g class="ufog">
+          <ellipse cx="718" cy="500" rx="70" ry="52" fill="rgba(150,255,210,.45)" stroke="#d6ffe9" stroke-width="5"/>
+          <ellipse cx="718" cy="485" rx="18" ry="22" fill="#6fcc7a"/><ellipse cx="711" cy="482" rx="6" ry="8" fill="#000"/><ellipse cx="726" cy="482" rx="6" ry="8" fill="#000"/>
+          <ellipse cx="718" cy="560" rx="190" ry="44" fill="#c2c7d3"/><ellipse cx="718" cy="545" rx="150" ry="18" fill="#f1f4f8"/>
+          <circle cx="600" cy="565" r="9" fill="#ffe27a"/><circle cx="718" cy="590" r="11" fill="#6dffb4"/><circle cx="836" cy="565" r="9" fill="#ffe27a"/>
+        </g>
+      </svg>
+      <div class="tag s">MEMBERS ONLY</div>
+      <div class="tag a">↓ THE ARTIST</div>
+      <div class="tag v">THE VISITOR ↓</div>
+    </div>
+    <div>
+      <div class="card player">
+        <h2>YOU MADE IT IN.</h2>
+        <p>Press play. Then save it everywhere before the feds take it down.</p>
+        <audio id="song" controls preload="none" src="massacre.mp3"></audio>
+        <div class="links" id="streamLinks"></div>
+      </div>
+      <form class="card gate" id="gate" novalidate>
+        <h2>JOIN THE CONGREGATION</h2>
+        <p>The song, the visual and door #3 are locked to members. Get on the list or get left outside.</p>
+        <label for="name">First name</label>
+        <input id="name" type="text" autocomplete="given-name" maxlength="40" placeholder="What do we call you">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" placeholder="you@email.com">
+        <div class="or">— AND / OR —</div>
+        <label for="phone">Phone</label>
+        <input id="phone" type="tel" autocomplete="tel" placeholder="(310) 555-0123">
+        <label class="check"><input type="checkbox" id="optEmail" checked> Email me new hymns, drops and shows.</label>
+        <label class="check"><input type="checkbox" id="optSms"> Text me drops and shows. Msg &amp; data rates may apply. Reply STOP to opt out.</label>
+        <button type="submit" id="go">UNLOCK THE DOORS</button>
+        <div class="err" id="err" role="alert"></div>
+        <div class="fine">We only use your info to tell you about this music. Never sold. Unsubscribe anytime.</div>
+      </form>
+    </div>
+  </div>
+
+  <section class="prod">
+    <div class="ph">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#0b0914"/><circle cx="50" cy="38" r="17" fill="#2a2440"/><path d="M18 96c3-22 17-32 32-32s29 10 32 32z" fill="#2a2440"/><text x="50" y="44" text-anchor="middle" font-family="Anton,Impact" font-size="13" fill="#ffd400">KR8S</text></svg>
+      <img src="producer.jpg" alt="Traviskr8s" onerror="this.remove()">
+    </div>
+    <div>
+      <div class="k">ON THE BEAT</div>
+      <div class="n">PROD. TRAVISKR8S</div>
+      <p style="color:var(--muted);margin:8px 0 0;line-height:1.5">The architect behind Hymn No. 1. Every gunshot, every siren, every bell in this church runs through his hands.</p>
+    </div>
+  </section>
+
+  <section class="vault" id="vault">
+    <div class="block"><h3>THE VISIT — OFFICIAL VISUAL</h3><div class="video" id="video"></div></div>
+    <div class="block">
+      <h3>DOOR #3 — YOUR MEMBERSHIP CARD</h3>
+      <div class="member">
+        <canvas id="cardCanvas" width="1080" height="1350" hidden></canvas>
+        <img id="cardPreview" alt="Your membership card">
+        <div>
+          <p style="color:var(--muted);line-height:1.5;margin-top:0">You're on the list. Post your card, tag the church. Card holders get first access to everything that drops next.</p>
+          <button id="dl">DOWNLOAD MY CARD</button>
+          <button class="ghost" id="share">SHARE</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© <span id="yr"></span> Church of Latter-day Hoes, a Sentinel Paradise company.<br>Not affiliated with any religious organization. Sound effects are part of the art.</footer>
+</div>
+<button id="mute" style="display:none">SOUND: ON</button>
+
+<script>
+/* ================= CONFIG — edit these ================= */
+const CONFIG = {
+  SIGNUP_ENDPOINT: "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
+  YOUTUBE_ID: "",
+  PREMIERE: "2026-11-06T18:00:00-08:00",
+  LINKS: [
+    ["Stream everywhere", "https://distrokid.com/hyperfollow/YOUR-LINK"],
+    ["Instagram", "https://instagram.com/YOUR-HANDLE"],
+    ["TikTok", "https://tiktok.com/@YOUR-HANDLE"],
+    ["YouTube", "https://youtube.com/@YOUR-CHANNEL"]
+  ]
+};
+/* ======================================================= */
+const $ = s => document.querySelector(s);
+$("#yr").textContent = new Date().getFullYear();
+$("#tape1").textContent = "CHURCH OF LATTER-DAY HOES — DO NOT CROSS — ".repeat(12);
+$("#tape2").textContent = "CRIME SCENE — MASSACRE — DO NOT CROSS — ".repeat(12);
+
+const params = new URLSearchParams(location.search);
+const ref = (params.get("ref") || localStorage.getItem("cldh_ref") || "direct").slice(0,40);
+if (params.get("ref")) localStorage.setItem("cldh_ref", ref);
+
+const fx = $("#fx"), g = fx.getContext("2d"); let P = [];
+function size(){ fx.width = innerWidth*devicePixelRatio; fx.height = innerHeight*devicePixelRatio;
+  P = Array.from({length:140}, () => ({x:Math.random()*fx.width, y:Math.random()*fx.height, r:Math.random()*1.8+.3,
+    vy:-(Math.random()*.6+.1), ember:Math.random()<.35, ph:Math.random()*6})); }
+function loop(t){ g.clearRect(0,0,fx.width,fx.height);
+  for (const p of P){ p.y += p.vy*devicePixelRatio; if (p.y < -5) { p.y = fx.height+5; p.x = Math.random()*fx.width; }
+    g.globalAlpha = p.ember ? .5+.5*Math.sin(t/200+p.ph) : .3+.7*Math.abs(Math.sin(t/900+p.ph));
+    g.fillStyle = p.ember ? "#ff8a2a" : "#fff"; g.beginPath(); g.arc(p.x,p.y,p.r*devicePixelRatio,0,7); g.fill(); }
+  requestAnimationFrame(loop); }
+addEventListener("resize", size); size(); requestAnimationFrame(loop);
+
+let ac, master, sirenGain, muted = false, shotTimer;
+function startAudio(){
+  try {
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    master = ac.createGain(); master.gain.value = .55; master.connect(ac.destination);
+    const lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1400; lp.connect(master);
+    sirenGain = ac.createGain(); sirenGain.gain.value = .05; sirenGain.connect(lp);
+    const o = ac.createOscillator(); o.type = "triangle"; o.frequency.value = 800;
+    const lfo = ac.createOscillator(); lfo.frequency.value = .35; const lg = ac.createGain(); lg.gain.value = 320;
+    lfo.connect(lg); lg.connect(o.frequency); o.connect(sirenGain); o.start(); lfo.start();
+  } catch(e) {}
+  scheduleShots();
+}
+function gunshot(vol){
+  if (!ac || muted) return;
+  const n = ac.sampleRate*.5, b = ac.createBuffer(1,n,ac.sampleRate), d = b.getChannelData(0);
+  for (let i=0;i<n;i++) d[i] = (Math.random()*2-1)*Math.pow(1-i/n,6);
+  const s = ac.createBufferSource(); s.buffer = b;
+  const f = ac.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 900+Math.random()*900;
+  const gn = ac.createGain(); gn.gain.value = vol; s.connect(f); f.connect(gn); gn.connect(master); s.start();
+  const th = ac.createOscillator(), tg = ac.createGain(); th.frequency.setValueAtTime(120,ac.currentTime);
+  th.frequency.exponentialRampToValueAtTime(40,ac.currentTime+.15); tg.gain.setValueAtTime(vol*.8,ac.currentTime);
+  tg.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.2); th.connect(tg); tg.connect(master); th.start(); th.stop(ac.currentTime+.25);
+}
+function burst(){
+  const shots = 1 + Math.floor(Math.random()*4), vol = .25 + Math.random()*.5;
+  for (let i=0;i<shots;i++) setTimeout(() => { gunshot(vol); visualShot(vol > .55); }, i*(110+Math.random()*160));
+}
+function scheduleShots(){ clearTimeout(shotTimer); shotTimer = setTimeout(() => { burst(); scheduleShots(); }, 4000 + Math.random()*9000); }
+function visualShot(close){
+  const fl = $("#flash"); fl.style.setProperty("--x", Math.random()*100+"%"); fl.style.setProperty("--y", Math.random()*100+"%");
+  fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
+  if (close){ document.body.classList.remove("shake"); void document.body.offsetWidth; document.body.classList.add("shake"); crack(); }
+}
+function crack(){
+  const h = document.createElementNS("http://www.w3.org/2000/svg","svg"); h.setAttribute("viewBox","-60 -60 120 120"); h.setAttribute("class","hole");
+  let lines = ""; for (let i=0;i<9;i++){ const a = Math.random()*6.28, r = 25+Math.random()*30;
+    lines += `<path d="M0 0 L${Math.cos(a)*r*.5} ${Math.sin(a)*r*.5} L${Math.cos(a+.15)*r} ${Math.sin(a+.15)*r}" stroke="rgba(255,255,255,.75)" stroke-width="1.2" fill="none"/>`; }
+  h.innerHTML = lines + `<circle r="6" fill="#000" stroke="rgba(255,255,255,.8)" stroke-width="2"/><circle r="14" fill="none" stroke="rgba(255,255,255,.35)"/>`;
+  h.style.left = (5+Math.random()*80)+"vw"; h.style.top = (10+Math.random()*75)+"vh"; document.body.appendChild(h);
+  setTimeout(() => h.style.opacity = 0, 1500); setTimeout(() => h.remove(), 4200);
+}
+$("#enter").addEventListener("click", () => {
+  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); setTimeout(burst, 600);
+});
+$("#mute").addEventListener("click", () => {
+  muted = !muted; $("#mute").textContent = muted ? "SOUND: OFF" : "SOUND: ON";
+  if (sirenGain) sirenGain.gain.value = muted ? 0 : .05;
+});
+$("#song").addEventListener("play", () => { muted = true; if (sirenGain) sirenGain.gain.value = 0; $("#mute").textContent = "SOUND: OFF"; });
+
+const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+const digits = v => v.replace(/\D/g,"");
+$("#gate").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("#name").value.trim(), email = $("#email").value.trim(), phone = $("#phone").value.trim();
+  const optEmail = $("#optEmail").checked, optSms = $("#optSms").checked, err = $("#err"); err.textContent = "";
+  if (!email && !phone) return err.textContent = "No email, no phone, no entry.";
+  if (email && !emailOk(email)) return err.textContent = "That email doesn't look right.";
+  if (phone && (digits(phone).length < 10 || digits(phone).length > 15)) return err.textContent = "That phone number doesn't look right.";
+  if (phone && !optSms) return err.textContent = "Check the text box so we're allowed to text you, or leave the phone blank.";
+  const btn = $("#go"); btn.disabled = true; btn.textContent = "OPENING THE DOORS…";
+  const data = new URLSearchParams({name, email, phone: phone ? digits(phone) : "", optEmail, optSms, ref,
+    page: location.href.split("?")[0], ua: navigator.userAgent.slice(0,200)});
+  try {
+    if (CONFIG.SIGNUP_ENDPOINT.startsWith("http")) await fetch(CONFIG.SIGNUP_ENDPOINT, {method:"POST", mode:"no-cors", body:data});
+    const m = {name: name || "Member", no: memberNo(email || phone), joined: new Date().toISOString()};
+    localStorage.setItem("cldh_member", JSON.stringify(m)); burst(); unlock(m);
+  } catch { err.textContent = "Couldn't connect. Check your signal and try again."; }
+  finally { btn.disabled = false; btn.textContent = "UNLOCK THE DOORS"; }
+});
+function memberNo(s){ let h = 0; for (const c of s) h = (h*31 + c.charCodeAt(0)) >>> 0; return String(h % 9000 + 1000); }
+
+function unlock(m){
+  document.body.classList.replace("locked","unlocked");
+  $("#streamLinks").innerHTML = CONFIG.LINKS.map(([t,u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("");
+  video(); card(m);
+}
+function video(){
+  const v = $("#video");
+  if (CONFIG.YOUTUBE_ID) { v.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${CONFIG.YOUTUBE_ID}?rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; return; }
+  v.innerHTML = `<div class="soon"><div class="t">THE VISIT</div><div class="c" id="count"></div><div style="color:var(--muted);margin-top:8px;font-weight:700">MEMBERS GET THE LINK FIRST</div></div>`;
+  const end = new Date(CONFIG.PREMIERE).getTime();
+  const tick = () => { const d = Math.max(0,end-Date.now()), D = Math.floor(d/864e5), H = Math.floor(d/36e5)%24, M = Math.floor(d/6e4)%60, S = Math.floor(d/1e3)%60;
+    const el = $("#count"); if (el) el.textContent = d ? `${D}D ${String(H).padStart(2,"0")}H ${String(M).padStart(2,"0")}M ${String(S).padStart(2,"0")}S` : "LIVE NOW"; };
+  tick(); setInterval(tick,1000);
+}
+function card(m){
+  const c = $("#cardCanvas"), x = c.getContext("2d"), W = c.width, H = c.height, img = new Image(); img.src = "cover.jpg";
+  img.onload = async () => {
+    try { await document.fonts.load("110px Anton"); } catch {}
+    x.fillStyle = "#050308"; x.fillRect(0,0,W,H);
+    const rg = x.createRadialGradient(W/2,0,10,W/2,0,950); rg.addColorStop(0,"rgba(109,255,180,.4)"); rg.addColorStop(1,"rgba(0,0,0,0)"); x.fillStyle = rg; x.fillRect(0,0,W,H);
+    x.save(); x.translate(W/2,70); x.rotate(-.04); x.fillStyle = "#ffd400"; x.fillRect(-W,-28,W*2,56);
+    x.fillStyle = "#000"; x.font = "900 26px Inter, sans-serif"; x.textAlign = "center"; x.fillText("DO NOT CROSS — CHURCH OF LATTER-DAY HOES — DO NOT CROSS", 0, 9); x.restore();
+    x.textAlign = "center"; x.fillStyle = "#f6f1e7"; x.font = "112px Anton, Impact, sans-serif";
+    x.fillText("CONGREGATION", W/2, 240); x.fillText("MEMBER", W/2, 360);
+    x.drawImage(img, W/2-250, 410, 500, 500);
+    x.save(); x.translate(W/2+170,860); x.rotate(-.2); x.strokeStyle = "#ff1f3d"; x.lineWidth = 8; x.strokeRect(-150,-50,300,92);
+    x.fillStyle = "#ff1f3d"; x.font = "64px Anton, Impact, sans-serif"; x.fillText("VERIFIED", 0, 18); x.restore();
+    x.fillStyle = "#ff1f3d"; x.font = "70px Anton, Impact, sans-serif"; x.fillText(m.name.toUpperCase().slice(0,20), W/2, 1015);
+    x.fillStyle = "#6dffb4"; x.font = "900 48px Inter, sans-serif"; x.fillText("MEMBER #" + m.no, W/2, 1090);
+    x.fillStyle = "#b4adc4"; x.font = "700 30px Inter, sans-serif"; x.fillText("HYMN NO. 1 · MASSACRE · " + new Date(m.joined).toLocaleDateString(), W/2, 1155);
+    x.fillStyle = "#ffd400"; x.fillRect(0, H-110, W, 56); x.fillStyle = "#000"; x.font = "900 26px Inter, sans-serif";
+    x.fillText("CRIME SCENE — MASSACRE — FIRST ACCESS TO EVERY DROP", W/2, H-73);
+    $("#cardPreview").src = c.toDataURL("image/png");
+  };
+}
+$("#dl").addEventListener("click", () => { const a = document.createElement("a"); a.href = $("#cardPreview").src; a.download = "congregation-card.png"; a.click(); });
+$("#share").addEventListener("click", async () => {
+  const url = location.href.split("?")[0];
+  try { const f = new File([await (await fetch($("#cardPreview").src)).blob()], "congregation-card.png", {type:"image/png"});
+    if (navigator.canShare && navigator.canShare({files:[f]})) await navigator.share({files:[f], title:"I joined the congregation", url});
+    else if (navigator.share) await navigator.share({title:"MASSACRE", url});
+    else { await navigator.clipboard.writeText(url); $("#share").textContent = "LINK COPIED"; }
+  } catch {}
+});
+const saved = localStorage.getItem("cldh_member");
+if (saved) { try { unlock(JSON.parse(saved)); } catch {} }
+</script>
+</body>
+</html>
