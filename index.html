@@ -93,12 +93,26 @@ h1:after{color:var(--green);clip-path:inset(55% 0 0 0);animation:g2 1.3s infinit
 .count b{font:900 18px Inter,sans-serif;letter-spacing:.06em;font-variant-numeric:tabular-nums;color:var(--green)}
 .mugwrap{position:relative}
 .mug{position:relative;aspect-ratio:4/5;overflow:hidden;-webkit-mask-image:radial-gradient(ellipse 66% 60% at 50% 42%,#000 28%,rgba(0,0,0,.55) 56%,transparent 82%);mask-image:radial-gradient(ellipse 66% 60% at 50% 42%,#000 28%,rgba(0,0,0,.55) 56%,transparent 82%)}
-.mug img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(1.05);animation:push 14s ease-in-out infinite alternate}
+.mug img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(1.03) contrast(1.02);animation:push 14s ease-in-out infinite alternate}
+/* earth angel: soft bloom, pastel light, halo, floating sparkles */
+.mug img.bloom{position:absolute;inset:0;filter:blur(16px) brightness(1.05) saturate(1.15);mix-blend-mode:screen;opacity:.28}
+.mug .aura{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(ellipse at 50% 34%,rgba(255,246,228,.3),transparent 50%),linear-gradient(160deg,rgba(255,190,232,.4),rgba(190,220,255,.3) 55%,rgba(255,236,190,.35));animation:aura 9s ease-in-out infinite alternate}
+@keyframes aura{to{filter:hue-rotate(28deg)}}
+.halo{position:absolute;left:50%;top:1%;z-index:2;width:36%;aspect-ratio:3/1;transform:translateX(-46%);border-radius:50%;pointer-events:none;
+  box-shadow:0 0 0 3px rgba(255,240,200,.9),0 0 18px 6px rgba(255,228,160,.75),0 0 60px 18px rgba(255,214,140,.35),inset 0 0 14px 4px rgba(255,240,200,.6);animation:halo 5s ease-in-out infinite}
+@keyframes halo{50%{transform:translateX(-46%) translateY(-7px);opacity:.8}}
+.mugwrap:before{content:"";position:absolute;inset:-6% -4%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,232,200,.32),rgba(214,170,255,.16) 55%,transparent);filter:blur(30px);animation:aura 9s ease-in-out infinite alternate}
+.sparks{position:absolute;inset:0;z-index:2;pointer-events:none}
+.sparks i{position:absolute;width:10px;height:10px;opacity:0;background:radial-gradient(closest-side,#fff,rgba(255,240,210,.6) 40%,transparent);animation:spark 4s ease-in-out infinite}
+.sparks i:before{content:"";position:absolute;inset:-9px 4px;background:linear-gradient(transparent,#fff,transparent)}
+.sparks i:after{content:"";position:absolute;inset:4px -9px;background:linear-gradient(90deg,transparent,#fff,transparent)}
+@keyframes spark{0%,100%{opacity:0;transform:translateY(0) scale(.4)}40%{opacity:1;transform:translateY(-10px) scale(1)}70%{opacity:0;transform:translateY(-22px) scale(.6)}}
+@media (prefers-reduced-motion:reduce){.halo,.sparks i,.mug .aura,.mugwrap:before{animation:none}.sparks i{opacity:.8}}
 @keyframes push{to{transform:scale(1.07)}}
 .mug .cops{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 0 40%,rgba(255,31,61,.32),transparent 45%),radial-gradient(circle at 100% 40%,rgba(46,107,255,.32),transparent 45%);animation:copsw 1.1s steps(1) infinite}
 @keyframes copsw{50%{background:radial-gradient(circle at 0 40%,rgba(46,107,255,.32),transparent 45%),radial-gradient(circle at 100% 40%,rgba(255,31,61,.32),transparent 45%)}}
-.stamp2{position:absolute;right:10%;bottom:20%;transform:rotate(-6deg);font:400 clamp(22px,3vw,34px) Anton,Impact,sans-serif;letter-spacing:.08em;color:var(--red);border:4px solid var(--red);padding:2px 12px;background:rgba(0,0,0,.35);z-index:2}
-.coin{position:absolute;right:1%;top:3%;z-index:3;width:clamp(128px,15vw,168px);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px;text-align:center;color:#000;
+.stamp2{position:absolute;right:4%;bottom:12%;transform:rotate(-6deg);font:400 clamp(22px,3vw,34px) Anton,Impact,sans-serif;letter-spacing:.08em;color:var(--red);border:4px solid var(--red);padding:2px 12px;background:rgba(0,0,0,.35);z-index:2}
+.coin{position:absolute;left:-2%;bottom:6%;z-index:3;width:clamp(128px,15vw,168px);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px;text-align:center;color:#000;
   background:radial-gradient(circle at 35% 30%,#c9ffe4,var(--green) 55%,#2fd47f);box-shadow:0 0 0 3px #000,0 0 0 5px var(--green),0 0 40px rgba(109,255,180,.6);transform:rotate(-12deg);animation:coin 6s ease-in-out infinite}
 .coin small{font:900 clamp(8px,.8vw,10px)/1.25 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase}
 .coin b{font:400 clamp(15px,1.7vw,19px)/.95 Anton,Impact,sans-serif;letter-spacing:.02em}
@@ -108,6 +122,8 @@ h1:after{color:var(--green);clip-path:inset(55% 0 0 0);animation:g2 1.3s infinit
   .hero{grid-template-columns:1fr;min-height:0;padding-top:0}
   .hero .art{order:-1;margin:0 calc(var(--gut)*-1)}
   .hero .copy{margin-top:-22vw}
+  .coin{left:auto;right:3%;bottom:auto;top:50%;width:108px;padding:10px}
+  .stamp2{display:none}
 }
 
 /* join: the scene + the door */
@@ -266,8 +282,9 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
   <div class="art">
     <div class="mugwrap">
       <div class="mug">
-        <img src="artist.jpg" alt="The artist, styled as the prime suspect">
-        <div class="cops"></div>
+        <img src="artist.jpg" alt="Minister Energi, the earth angel">
+        <img class="bloom" src="artist.jpg" alt="">
+        <div class="aura"></div>
       </div>
       <div class="stamp2">PRIME SUSPECT</div>
       <div class="coin"><small>Everybody thought she was weird.</small><b>SHE JUST WASN'T FROM HERE.</b><i>★ EARTH ANGEL ★</i></div>
