@@ -74,6 +74,12 @@ button.ghost{background:transparent;color:var(--ink);border:2px solid var(--line
 button:disabled{opacity:.6}
 .err{color:#ff7a8a;font-size:14px;font-weight:700;min-height:20px;margin-top:10px}
 .fine{font-size:11px;color:#7d7790;margin-top:12px;line-height:1.5}
+.gw{border:2px dashed var(--tape);border-radius:12px;padding:12px 14px;margin:4px 0 6px;font-size:14px;line-height:1.45}
+.gw b{display:block;font:400 24px Anton,Impact,sans-serif;letter-spacing:.04em;color:var(--tape)}
+#myLink{width:100%;padding:13px;border-radius:10px;border:2px dashed var(--tape);background:#07060c;color:var(--tape);font:700 14px ui-monospace,Menlo,monospace}
+.rules{margin:14px auto 0;max-width:640px;text-align:left}
+.rules summary{cursor:pointer;text-align:center}
+.rules p{margin:8px 0 0}
 .player,.vault{display:none}.unlocked .player,.unlocked .vault{display:block}.unlocked .gate{display:none}
 .vault{margin-top:28px}
 .block{margin-top:24px}
@@ -99,9 +105,15 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
 @keyframes beamp{50%{opacity:.35}}
 .scene .ufog{animation:bob 3s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-14px)}}
-.scene:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px);pointer-events:none}
+.scene:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0 2px,transparent 2px 4px);pointer-events:none}
+.scene > img{filter:contrast(1.08) saturate(1.1)}
+.scene .aura{animation:aura 2.6s ease-in-out infinite}
+@keyframes aura{50%{opacity:.55}}
+.scene .swing{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;opacity:0;filter:drop-shadow(0 0 6px #ffe6a8);animation:swing 6s ease-in infinite}
+@keyframes swing{0%,68%{stroke-dashoffset:420;opacity:0}70%{opacity:.95}80%{stroke-dashoffset:0;opacity:.9}92%,100%{stroke-dashoffset:0;opacity:0}}
 .tag{position:absolute;font:900 11px Inter,sans-serif;letter-spacing:.16em;background:#000;color:var(--green);border:2px solid var(--green);padding:5px 8px;white-space:nowrap;z-index:2}
-.tag.v{right:4%;top:56%;animation:fade 1.2s infinite alternate}
+.tag.v{left:61%;top:59%;transform:translateX(-50%);box-shadow:0 0 18px rgba(109,255,180,.85);text-shadow:0 0 8px rgba(109,255,180,.9);animation:fade 1.2s infinite alternate}
+.tag.v:after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--green)}
 .tag.s{right:4%;top:4%;color:var(--red);border-color:var(--red);font-size:13px}
 .unlocked .tag.s{display:none}
 .prod{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:26px;align-items:center;margin-top:36px}
@@ -161,8 +173,39 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
   <div class="grid">
     <div class="scene">
       <img src="cover.jpg" alt="The artist golfing beside the transcendence creature as the UFO arrives">
+      <!-- relight: lift the two silhouettes, gold rim on the artist, green aura on the visitor, animated swing -->
+      <svg class="ov" viewBox="0 0 600 600" aria-hidden="true">
+        <defs>
+          <radialGradient id="soft"><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+          <mask id="mArtist" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="600"><ellipse cx="185" cy="458" rx="66" ry="118" fill="url(#soft)"/></mask>
+          <mask id="mVisitor" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="600"><ellipse cx="368" cy="502" rx="82" ry="88" fill="url(#soft)"/></mask>
+          <filter id="lift"><feComponentTransfer><feFuncR type="gamma" amplitude="1.1" exponent=".6"/><feFuncG type="gamma" amplitude="1.1" exponent=".6"/><feFuncB type="gamma" amplitude="1.1" exponent=".6"/></feComponentTransfer></filter>
+          <!-- alpha = how much darker than the sky a pixel is: picks out the silhouettes -->
+          <filter id="rimGold" filterUnits="userSpaceOnUse" x="0" y="0" width="600" height="600">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.5 -2.75 -.75 0 3.1" result="sil"/>
+            <feMorphology in="sil" operator="dilate" radius="1.5" result="fat"/><feGaussianBlur in="fat" stdDeviation="3" result="b"/>
+            <feFlood flood-color="#ffcf6b"/><feComposite in2="b" operator="in" result="g"/><feComposite in="g" in2="sil" operator="out" result="rim"/>
+            <feMerge><feMergeNode in="rim"/><feMergeNode in="rim"/></feMerge>
+          </filter>
+          <filter id="rimGreen" filterUnits="userSpaceOnUse" x="0" y="0" width="600" height="600">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.5 -2.75 -.75 0 3.1" result="sil"/>
+            <feMorphology in="sil" operator="dilate" radius="3" result="fat"/><feGaussianBlur in="fat" stdDeviation="9" result="b"/>
+            <feFlood flood-color="#9dffd0"/><feComposite in2="b" operator="in" result="g"/><feComposite in="g" in2="sil" operator="out" result="rim"/>
+            <feMerge><feMergeNode in="rim"/><feMergeNode in="rim"/><feMergeNode in="rim"/></feMerge>
+          </filter>
+        </defs>
+        <g mask="url(#mArtist)"><image href="cover.jpg" width="600" height="600" filter="url(#lift)"/></g>
+        <g mask="url(#mArtist)"><image href="cover.jpg" width="600" height="600" filter="url(#rimGold)"/></g>
+        <g mask="url(#mVisitor)"><image href="cover.jpg" width="600" height="600" filter="url(#lift)"/></g>
+        <g class="aura" mask="url(#mVisitor)"><image href="cover.jpg" width="600" height="600" filter="url(#rimGreen)"/></g>
+        <path class="swing" d="M165 372C108 470 158 562 212 556C262 550 274 470 252 410"/>
+        <circle r="4.5" fill="#fff" opacity="0" style="filter:drop-shadow(0 0 4px #fff)">
+          <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;.78;.95;1" path="M214 555Q340 360 312 178"/>
+          <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;0;1;1;0" keyTimes="0;.77;.78;.94;1"/>
+        </circle>
+      </svg>
       <div class="tag s">MEMBERS ONLY</div>
-      <div class="tag v">THE VISITOR ↓</div>
+      <div class="tag v">THE VISITOR</div>
     </div>
     <div>
       <div class="card player">
@@ -174,6 +217,7 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
       <form class="card gate" id="gate" novalidate>
         <h2>JOIN THE CONGREGATION</h2>
         <p>The song, the visual and door #3 are locked to members. Get on the list or get left outside.</p>
+        <div class="gw"><b>WIN GAS MONEY</b><span class="gwLine"></span> Share your link after you join for bonus entries.</div>
         <label for="name">First name</label>
         <input id="name" type="text" autocomplete="given-name" maxlength="40" placeholder="What do we call you">
         <label for="email">Email</label>
@@ -249,12 +293,20 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
     <div>
       <div class="k">ON THE BEAT · CASE FILE #KR8S</div>
       <div class="n">PROD. TRAVISKR8S</div>
-      <p style="color:var(--muted);margin:8px 0 0;line-height:1.5">Found face-down on the board at Studio B when the smoke cleared, the session still running. He went out on the beat. Last words on record: <b style="color:var(--ink)">"I don't get tired."</b> Above him, the transcendence creature keeps watch as his soul crosses back to the positive side. Ego death, not the end. Every gunshot, every siren, every bell in this church ran through his hands.</p>
+      <p style="color:var(--ink);margin:8px 0 0;font-weight:900;letter-spacing:.04em">Died on the beat. Still don't get tired.</p>
     </div>
   </section>
 
   <section class="vault" id="vault">
     <div class="block"><h3>THE VISIT — OFFICIAL VISUAL</h3><div class="video" id="video"></div></div>
+    <div class="block">
+      <h3>YOUR ENTRIES — GAS CARD GIVEAWAY</h3>
+      <div class="card">
+        <p style="margin-top:0"><span class="gwVault"></span> Every friend who joins through <b style="color:var(--ink)">your link</b> = +1 bonus entry.</p>
+        <input id="myLink" readonly aria-label="Your personal invite link">
+        <button id="copyLink">COPY MY LINK</button>
+      </div>
+    </div>
     <div class="block">
       <h3>DOOR #3 — YOUR MEMBERSHIP CARD</h3>
       <div class="member">
@@ -269,7 +321,11 @@ footer{margin-top:50px;text-align:center;color:#6f6984;font-size:12px;line-heigh
     </div>
   </section>
 
-  <footer>© <span id="yr"></span> Church of Latter-day Hoes, a Sentinel Paradise company.<br>Not affiliated with any religious organization. Sound effects are part of the art.</footer>
+  <footer>© <span id="yr"></span> Church of Latter-day Hoes, a Sentinel Paradise company.<br>Not affiliated with any religious organization. Sound effects are part of the art.
+    <details class="rules"><summary>Giveaway official rules</summary>
+      <p>No purchase necessary. Open to legal U.S. residents 18 and older. Enter by joining the list on this page before the end time below; one entry per person (duplicate emails or phone numbers don't count). Earn one bonus entry for each new person who joins using your personal link; fake, duplicate or self-made entries are void.</p>
+      <p>Prize: <span class="gwPrize"></span> each to <span class="gwWinners"></span> winners, sent as a digital gift card. Ends <span class="gwEnds"></span>. Winners are picked at random from all entries at the premiere and contacted by the email or phone they signed up with; a winner who doesn't reply within 7 days is replaced. Odds depend on the number of entries. Void where prohibited. Sponsor: Sentinel Paradise. Not sponsored or endorsed by any gas station or card issuer.</p>
+    </details></footer>
 </div>
 <button id="mute" style="display:none">SOUND: ON</button>
 
@@ -279,6 +335,8 @@ const CONFIG = {
   SIGNUP_ENDPOINT: "https://script.google.com/macros/s/AKfycby6WZFM_8zM6BqXuADwhPX4MpJQUqLXzpXKKc8GzDK3cAvnSgo0zo2UAzVdIc_x_WGL/exec",
   YOUTUBE_ID: "",
   PREMIERE: "2026-11-06T18:00:00-08:00",
+  // Signup giveaway: drawn at the premiere
+  GIVEAWAY: { PRIZE: "$50 gas card", WINNERS: 3 },
   LINKS: [
     ["Stream everywhere", "https://distrokid.com/hyperfollow/YOUR-LINK"],
     ["Instagram", "https://instagram.com/YOUR-HANDLE"],
@@ -290,6 +348,12 @@ const CONFIG = {
 const $ = s => document.querySelector(s);
 const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
 $("#yr").textContent = new Date().getFullYear();
+const GW = CONFIG.GIVEAWAY, gwEnds = new Date(CONFIG.PREMIERE).toLocaleString("en-US", {weekday:"short", month:"numeric", day:"numeric", hour:"numeric", minute:"2-digit", timeZone:"America/Los_Angeles"}) + " PT";
+document.querySelectorAll(".gwLine").forEach(e => e.textContent = `Join = 1 entry to win a ${GW.PRIZE}. ${GW.WINNERS} winners drawn live at the premiere, ${gwEnds}.`);
+document.querySelectorAll(".gwVault").forEach(e => e.textContent = `You're entered to win a ${GW.PRIZE}. ${GW.WINNERS} winners drawn live at the premiere, ${gwEnds}.`);
+document.querySelectorAll(".gwPrize").forEach(e => e.textContent = "one " + GW.PRIZE);
+document.querySelectorAll(".gwWinners").forEach(e => e.textContent = GW.WINNERS);
+document.querySelectorAll(".gwEnds").forEach(e => e.textContent = gwEnds);
 $("#tape1").textContent = "CHURCH OF LATTER-DAY HOES — DO NOT CROSS — ".repeat(12);
 $("#tape2").textContent = "CRIME SCENE — MASSACRE — DO NOT CROSS — ".repeat(12);
 
@@ -421,20 +485,23 @@ $("#gate").addEventListener("submit", async e => {
   if (phone && (digits(phone).length < 10 || digits(phone).length > 15)) return err.textContent = "That phone number doesn't look right.";
   if (phone && !optSms) return err.textContent = "Check the text box so we're allowed to text you, or leave the phone blank.";
   const btn = $("#go"); btn.disabled = true; btn.textContent = "OPENING THE DOORS…";
+  const no = memberNo(email || phone);
   const data = new URLSearchParams({name, email, phone: phone ? digits(phone) : "", optEmail, optSms, ref,
-    page: location.href.split("?")[0], ua: navigator.userAgent.slice(0,200)});
+    page: location.href.split("?")[0], ua: navigator.userAgent.slice(0,200), member: no});
   try {
     if (CONFIG.SIGNUP_ENDPOINT.startsWith("http")) await fetch(CONFIG.SIGNUP_ENDPOINT, {method:"POST", mode:"no-cors", body:data});
-    const m = {name: name || "Member", no: memberNo(email || phone), joined: new Date().toISOString()};
+    const m = {name: name || "Member", no, joined: new Date().toISOString()};
     store.set("cldh_member", JSON.stringify(m)); burst(); unlock(m);
   } catch { err.textContent = "Couldn't connect. Check your signal and try again."; }
   finally { btn.disabled = false; btn.textContent = "UNLOCK THE DOORS"; }
 });
-function memberNo(s){ let h = 0; for (const c of s) h = (h*31 + c.charCodeAt(0)) >>> 0; return String(h % 9000 + 1000); }
+function memberNo(s){ let h = 0; for (const c of s) h = (h*31 + c.charCodeAt(0)) >>> 0; return String(h % 900000 + 100000); }
+const myLink = m => location.href.split("?")[0] + "?ref=m" + m.no;
 
 function unlock(m){
   document.body.classList.replace("locked","unlocked");
   $("#streamLinks").innerHTML = CONFIG.LINKS.map(([t,u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("");
+  $("#myLink").value = myLink(m);
   video(); card(m);
 }
 function video(){
@@ -463,13 +530,17 @@ function card(m){
     x.fillStyle = "#6dffb4"; x.font = "900 48px Inter, sans-serif"; x.fillText("MEMBER #" + m.no, W/2, 1090);
     x.fillStyle = "#b4adc4"; x.font = "700 30px Inter, sans-serif"; x.fillText("HYMN NO. 1 · MASSACRE · " + new Date(m.joined).toLocaleDateString(), W/2, 1155);
     x.fillStyle = "#ffd400"; x.fillRect(0, H-110, W, 56); x.fillStyle = "#000"; x.font = "900 26px Inter, sans-serif";
-    x.fillText("CRIME SCENE — MASSACRE — FIRST ACCESS TO EVERY DROP", W/2, H-73);
+    x.fillText("CRIME SCENE — MASSACRE — ENTERED TO WIN A " + CONFIG.GIVEAWAY.PRIZE.toUpperCase(), W/2, H-73);
     $("#cardPreview").src = c.toDataURL("image/png");
   };
 }
 $("#dl").addEventListener("click", () => { const a = document.createElement("a"); a.href = $("#cardPreview").src; a.download = "congregation-card.png"; a.click(); });
+$("#copyLink").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($("#myLink").value); } catch { $("#myLink").select(); document.execCommand("copy"); }
+  $("#copyLink").textContent = "COPIED — GO POST IT";
+});
 $("#share").addEventListener("click", async () => {
-  const url = location.href.split("?")[0];
+  const url = $("#myLink").value || location.href.split("?")[0];
   try { const f = new File([await (await fetch($("#cardPreview").src)).blob()], "congregation-card.png", {type:"image/png"});
     if (navigator.canShare && navigator.canShare({files:[f]})) await navigator.share({files:[f], title:"I joined the congregation", url});
     else if (navigator.share) await navigator.share({title:"MASSACRE", url});
