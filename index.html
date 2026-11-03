@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://marztrip.com/cover.jpg">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"MusicRecording","@id":"https://marztrip.com/#massacre","name":"MASSACRE","alternateName":"Hymn No. 3","duration":"PT3M19S","genre":["Hip-Hop/Rap","Trap","West Coast hip hop"],"url":"https://marztrip.com/","image":"https://marztrip.com/cover.jpg","sameAs":"https://distrokid.com/hyperfollow/ministerenergi/massacre-feat-marz",
+ {"@type":"MusicRecording","@id":"https://marztrip.com/#massacre","name":"MASSACRE","alternateName":"Hymn No. 3","duration":"PT3M7S","genre":["Hip-Hop/Rap","Trap","West Coast hip hop"],"url":"https://marztrip.com/","image":"https://marztrip.com/cover.jpg","sameAs":"https://distrokid.com/hyperfollow/ministerenergi/massacre-feat-marz",
   "byArtist":{"@id":"https://marztrip.com/#artist"},"producer":{"@type":"Person","name":"Traviskr8s","sameAs":"https://instagram.com/traviskr8s"},
   "keywords":"UFO, aliens landing, extraterrestrial, celestial beings, the arrival, North Long Beach, Long Beach rap, trap music, West Coast trap, female rapper, earth angel"},
  {"@type":"MusicGroup","@id":"https://marztrip.com/#artist","name":"Minister Energi","alternateName":"MARZTRIP","genre":"Hip-Hop/Rap","foundingLocation":{"@type":"Place","name":"North Long Beach, California"},
@@ -554,13 +554,13 @@ function loop(t){ g.clearRect(0,0,fx.width,fx.height);
 addEventListener("resize", size); size(); requestAnimationFrame(loop);
 
 let ac, master, sirenGain, heliGain, muted = false, whoopTimer;
-// Background beat (Nip Hot Record, prod. Sir.Hollywood): sped up a touch with extra low end, under the sirens
-const bed = new Audio("beat.m4a"); bed.loop = true; bed.preload = "auto"; bed.preservesPitch = bed.mozPreservesPitch = bed.webkitPreservesPitch = false;
-const BED_RATE = 1.08, BED_VOL = 1;
+// Background song: MASSACRE (M MIX 2), played as mixed, under the sirens
+const bed = new Audio("massacre.m4a?v=2"); bed.loop = true; bed.preload = "auto"; bed.preservesPitch = bed.mozPreservesPitch = bed.webkitPreservesPitch = false;
+const BED_RATE = 1, BED_VOL = 1;
 function startBed(){
   try {
     const src = ac.createMediaElementSource(bed), low = ac.createBiquadFilter(), g = ac.createGain();
-    low.type = "lowshelf"; low.frequency.value = 120; low.gain.value = 5; g.gain.value = BED_VOL;
+    low.type = "lowshelf"; low.frequency.value = 120; low.gain.value = 0; g.gain.value = BED_VOL;
     src.connect(low); low.connect(g); g.connect(ac.destination);
   } catch (e) {}
   bed.playbackRate = BED_RATE; bed.play().catch(() => {});
