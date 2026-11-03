@@ -264,7 +264,7 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
 .guest p.msg{margin:0 0 26px;max-width:560px;font:900 clamp(17px,1.6vw,21px)/1.35 Inter,sans-serif}
 @media (max-width:640px){.guest{grid-template-columns:1fr}.guest .clip{width:min(300px,80%);margin:0 auto}}
 /* Sheila the clown: drops in, dances, gets beamed up (mirrors the Sheila Young (@sheiladyeah) x Minister Energi collab) */
-.show{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden}
+.show{position:fixed;inset:0;z-index:110;pointer-events:none;overflow:hidden}
 .show .clown{position:absolute;left:50%;bottom:4vh;width:clamp(130px,22vw,210px);margin-left:calc(clamp(130px,22vw,210px)/-2);transform:translateY(-130vh);transform-origin:50% 100%}
 .show .clown svg{display:block;width:100%;height:auto;overflow:visible}
 .show.drop .clown{animation:cdrop .9s cubic-bezier(.3,1.5,.6,1) forwards}
@@ -701,9 +701,9 @@ function beamSound(){
 $("#enter").addEventListener("click", () => {
   $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); startBed(); setTimeout(whoop, 600);
   // page 2 = signup for anyone not in yet; members go straight to page 3
-  if (document.body.classList.contains("unlocked")) setTimeout(clownShow, 1500); else document.body.classList.add("step2");
+  if (!document.body.classList.contains("unlocked")) document.body.classList.add("step2");
 });
-function toLanding(){ if (!document.body.classList.contains("step2")) return; document.body.classList.remove("step2"); scrollTo(0, 0); setTimeout(clownShow, 900); }
+function toLanding(){ if (!document.body.classList.contains("step2")) return; document.body.classList.remove("step2"); scrollTo(0, 0); }
 $("#skipGate").addEventListener("click", e => { e.preventDefault(); toLanding(); });
 $("#mute").addEventListener("click", () => {
   muted = !muted; $("#mute").textContent = muted ? "SOUND: OFF" : "SOUND: ON";
@@ -836,6 +836,8 @@ $("#vendorForm").addEventListener("submit", async e => {
 
 const saved = store.get("cldh_member");
 if (saved) { try { unlock(JSON.parse(saved)); } catch {} }
+// Sheila shows up on the very first screen, over tap-to-enter
+setTimeout(clownShow, 700);
 </script>
 </body>
 </html>
