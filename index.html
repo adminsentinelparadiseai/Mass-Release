@@ -290,6 +290,26 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
 @keyframes cwave{0%{transform:rotate(-35deg)}100%{transform:rotate(35deg)}}
 @keyframes ckick{0%{transform:rotate(-14deg)}100%{transform:rotate(14deg)}}
 @keyframes cabduct{0%{transform:none}15%{transform:translateY(-4vh) rotate(-10deg)}100%{transform:translateY(calc(-96vh + clamp(170px,30vw,300px))) scale(.12) rotate(540deg);opacity:.3}}
+/* realistic saucer: arrives with the sirens, hovers with a beam, zips off when the song drops */
+.craft{position:fixed;inset:0;z-index:110;pointer-events:none;overflow:hidden}
+.craft[hidden]{display:none}
+.craft .body{position:absolute;left:50%;top:9vh;width:clamp(240px,46vw,560px);margin-left:calc(clamp(240px,46vw,560px)/-2);transform:translate(38vw,-22vh) scale(.08);filter:blur(3px) brightness(.6);opacity:0}
+.craft .body svg{display:block;width:100%;height:auto;overflow:visible}
+.craft.arrive .body{animation:uArrive 3s cubic-bezier(.15,.7,.25,1) forwards}
+.craft.hover .body{transform:none;filter:none;opacity:1;animation:uHover 2.4s ease-in-out infinite alternate}
+.craft.leave .body{transform:none;filter:none;opacity:1;animation:uLeave .7s cubic-bezier(.7,0,1,.4) forwards}
+.craft .beam{position:absolute;left:50%;top:calc(9vh + clamp(60px,11vw,140px));bottom:0;width:clamp(220px,44vw,520px);transform:translateX(-50%);opacity:0;transition:opacity .6s;
+  clip-path:polygon(41% 0,59% 0,100% 100%,0 100%);background:linear-gradient(rgba(190,255,225,.55),rgba(109,255,180,.18) 45%,rgba(109,255,180,0));mix-blend-mode:screen}
+.craft .beam:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 18px,rgba(255,255,255,.06) 18px 20px);animation:uScan 1.6s linear infinite}
+.craft.hover .beam{opacity:1}
+.craft .haze{position:absolute;left:50%;top:2vh;width:90vw;height:45vh;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(140,255,210,.22),transparent);opacity:0;transition:opacity 1.5s}
+.craft.hover .haze{opacity:1}
+.craft .chase circle{animation:uChase 1.2s linear infinite;opacity:.25}
+@keyframes uArrive{0%{transform:translate(38vw,-22vh) scale(.08);filter:blur(3px) brightness(.6);opacity:0}15%{opacity:1}100%{transform:none;filter:none;opacity:1}}
+@keyframes uHover{0%{transform:translateY(0) rotate(-1.5deg)}100%{transform:translateY(-10px) rotate(1.5deg)}}
+@keyframes uLeave{0%{transform:none}25%{transform:translateY(8px) scale(1.02)}100%{transform:translate(-70vw,-60vh) scale(.05);opacity:0}}
+@keyframes uChase{0%,30%{opacity:1}31%,100%{opacity:.25}}
+@keyframes uScan{to{background-position:20px 0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
@@ -516,6 +536,34 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
 </div>
 <button id="mute" style="display:none">SOUND: ON</button>
 
+<div class="craft" id="craft" aria-hidden="true" hidden>
+  <div class="haze"></div>
+  <div class="beam"></div>
+  <div class="body"><svg viewBox="0 0 560 220">
+    <defs>
+      <linearGradient id="uHull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7f9"/><stop offset=".35" stop-color="#aab4bc"/><stop offset=".55" stop-color="#4a535b"/><stop offset=".7" stop-color="#9aa5ad"/><stop offset="1" stop-color="#2b3137"/></linearGradient>
+      <linearGradient id="uSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".7"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <radialGradient id="uDome" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#eafff6" stop-opacity=".95"/><stop offset=".5" stop-color="#7fd9c0" stop-opacity=".55"/><stop offset="1" stop-color="#123a33" stop-opacity=".85"/></radialGradient>
+      <radialGradient id="uUnder"><stop offset="0" stop-color="#d8ffee"/><stop offset=".4" stop-color="#6dffb4" stop-opacity=".8"/><stop offset="1" stop-color="#6dffb4" stop-opacity="0"/></radialGradient>
+      <filter id="uBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+      <filter id="uGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <ellipse cx="280" cy="160" rx="150" ry="34" fill="url(#uUnder)" filter="url(#uBlur)"/>
+    <path d="M150 96 Q160 30 280 26 Q400 30 410 96 Z" fill="url(#uDome)" stroke="#d9fff0" stroke-opacity=".5" stroke-width="2"/>
+    <path d="M200 70 Q230 40 290 38" stroke="#fff" stroke-opacity=".75" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="280" cy="112" rx="276" ry="38" fill="url(#uHull)"/>
+    <ellipse cx="280" cy="112" rx="276" ry="38" fill="url(#uSheen)" opacity=".6"/>
+    <ellipse cx="280" cy="104" rx="250" ry="18" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+    <path d="M60 126 Q280 176 500 126 Q470 150 280 156 Q90 150 60 126 Z" fill="#1d2227"/>
+    <ellipse cx="280" cy="148" rx="70" ry="10" fill="#c8ffe6" filter="url(#uGlow)"/>
+    <g class="chase" filter="url(#uGlow)">
+      <circle cx="40" cy="116" r="5" fill="#ff4a5a" style="animation-delay:0s"/><circle cx="100" cy="128" r="5" fill="#ffd36b" style="animation-delay:.15s"/>
+      <circle cx="170" cy="136" r="5" fill="#9dffd0" style="animation-delay:.3s"/><circle cx="245" cy="140" r="5" fill="#8ab4ff" style="animation-delay:.45s"/>
+      <circle cx="315" cy="140" r="5" fill="#ff4a5a" style="animation-delay:.6s"/><circle cx="390" cy="136" r="5" fill="#ffd36b" style="animation-delay:.75s"/>
+      <circle cx="460" cy="128" r="5" fill="#9dffd0" style="animation-delay:.9s"/><circle cx="520" cy="116" r="5" fill="#8ab4ff" style="animation-delay:1.05s"/>
+    </g>
+  </svg></div>
+</div>
 <div class="show" id="show" aria-hidden="true" hidden>
   <div class="beam" id="beam"></div>
   <svg class="ufo" id="ufo" viewBox="0 0 280 110">
@@ -542,7 +590,6 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
     <circle cx="100" cy="68" r="7" fill="#ff1f3d"/>
     <path d="M90 20 L108 -12 L120 22 Z" fill="#6dffb4" stroke="#000" stroke-width="3"/><circle cx="108" cy="-14" r="6" fill="#ffd400"/>
   </svg></div>
-  <div class="tag">SHEILA YOUNG @SHEILADYEAH</div>
 </div>
 <script>
 /* ================= CONFIG — edit these ================= */
@@ -628,7 +675,9 @@ function startBed(){
   } catch (e) {}
   bed.playbackRate = BED_RATE; bed.play().catch(() => {});
 }
-const STREET_VOL = .05, HELI_VOL = .14;
+// sirens open loud for INTRO_MS, then drop to a faint bed once the song starts
+const STREET_VOL = .006, HELI_VOL = .02, INTRO_STREET = .2, INTRO_HELI = .35, INTRO_MS = 6500;
+function duckStreet(){ const t = ac.currentTime; sirenGain.gain.setTargetAtTime(STREET_VOL, t, .5); heliGain.gain.setTargetAtTime(HELI_VOL, t, .5); }
 function setStreet(on){ if (sirenGain) sirenGain.gain.value = on ? STREET_VOL : 0; if (heliGain) heliGain.gain.value = on ? HELI_VOL : 0; }
 // Street bed: two blown-out squad car sirens (wail + yelp) passing by, "whoop" chirps, and a ghetto bird overhead
 function startAudio(){
@@ -639,7 +688,7 @@ function startAudio(){
     const dirt = ac.createWaveShaper(), curve = new Float32Array(1024);
     for (let i=0;i<1024;i++){ const x = i/512-1; curve[i] = (1+40)*x/(1+40*Math.abs(x)); }
     dirt.curve = curve; dirt.connect(horn);
-    sirenGain = ac.createGain(); sirenGain.gain.value = STREET_VOL; sirenGain.connect(dirt);
+    sirenGain = ac.createGain(); sirenGain.gain.value = INTRO_STREET; sirenGain.connect(dirt);
     const pan = v => { if (!ac.createStereoPanner) return null; const p = ac.createStereoPanner(); p.pan.value = v; return p; };
     // a siren = oscillator swept by an LFO, with a slow swell so it sounds like it drives past
     const siren = (type, base, depth, rate, swellRate, side) => {
@@ -663,7 +712,7 @@ function startAudio(){
     const hg = ac.createGain(); hg.gain.value = .5;  // square rotor LFO swings this 0..1
     const rotor = ac.createOscillator(); rotor.type = "square"; rotor.frequency.value = 11;
     const rg = ac.createGain(); rg.gain.value = .5; rotor.connect(rg); rg.connect(hg.gain);
-    heliGain = ac.createGain(); heliGain.gain.value = HELI_VOL;
+    heliGain = ac.createGain(); heliGain.gain.value = INTRO_HELI;
     heli.connect(hf); hf.connect(hg); hg.connect(heliGain); heliGain.connect(master); heli.start(); rotor.start();
   } catch(e) {}
   scheduleWhoop();
@@ -678,6 +727,15 @@ function whoop(){
   }
 }
 function scheduleWhoop(){ clearTimeout(whoopTimer); whoopTimer = setTimeout(() => { whoop(); scheduleWhoop(); }, 6000 + Math.random()*12000); }
+// saucer flies in with the sirens and leaves when the song starts
+function craftShow(){
+  const c = $("#craft"); if (!c || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  c.hidden = false; c.classList.add("arrive");
+  setTimeout(() => c.classList.replace("arrive", "hover"), 3000);
+  setTimeout(() => c.classList.replace("hover", "leave"), INTRO_MS - 300);
+  setTimeout(() => c.remove(), INTRO_MS + 600);
+}
+
 // Sheila the clown: drops in, dances, then the UFO beams her up. Once per visit.
 function clownShow(){
   const s = $("#show"); if (!s || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -699,7 +757,8 @@ function beamSound(){
 }
 
 $("#enter").addEventListener("click", () => {
-  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); startBed(); setTimeout(whoop, 600);
+  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); setTimeout(whoop, 600); craftShow();
+  setTimeout(() => { startBed(); if (muted) bed.pause(); else duckStreet(); }, INTRO_MS);
   // page 2 = signup for anyone not in yet; members go straight to page 3
   if (!document.body.classList.contains("unlocked")) document.body.classList.add("step2");
 });
@@ -836,8 +895,7 @@ $("#vendorForm").addEventListener("submit", async e => {
 
 const saved = store.get("cldh_member");
 if (saved) { try { unlock(JSON.parse(saved)); } catch {} }
-// Sheila shows up on the very first screen, over tap-to-enter
-setTimeout(clownShow, 700);
+// Sheila clown is off until the real abduction clip comes in: setTimeout(clownShow, 700);
 </script>
 </body>
 </html>
