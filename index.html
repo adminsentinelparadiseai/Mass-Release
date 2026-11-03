@@ -162,6 +162,12 @@ button:disabled{opacity:.6}
 
 /* members */
 .player,.vault{display:none}.unlocked .player,.unlocked .vault{display:block}.unlocked .gate{display:none}
+/* step 2 of 3: after tap-to-enter, non-members get the signup full screen before the landing page */
+.step2{overflow:hidden}
+.step2 .gate{position:fixed;inset:0;z-index:90;overflow-y:auto;padding:max(28px,7vh) max(var(--gut),calc(50% - 270px)) 40px;background:radial-gradient(circle at 50% 0,rgba(109,255,180,.18),transparent 55%),rgba(0,0,0,.95)}
+.gate .step,.gate .skip{display:none}
+.step2 .gate .step{display:block;font:900 10px Inter,sans-serif;letter-spacing:.3em;color:var(--green);margin:0 0 14px;animation:fade 1.2s infinite alternate}
+.step2 .gate .skip{display:block;text-align:center;margin-top:18px;color:#6f6984;font:700 12px Inter,sans-serif}
 audio{width:100%;margin-top:6px}
 .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .links a{color:var(--ink);text-decoration:none;box-shadow:inset 0 0 0 1px rgba(246,241,231,.3);padding:12px 16px;font:900 11px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase}
@@ -390,6 +396,7 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
         <div class="links" id="streamLinks"></div>
       </div>
       <form class="gate" id="gate" novalidate>
+        <div class="step">STEP 2 OF 3 · YOU’RE ALMOST IN</div>
         <p class="eyebrow">Members only</p>
         <h2 class="h2">JOIN THE CONGREGATION</h2>
         <p class="lede">The song, the visual and door #3 are locked. Get on the list or get left outside.</p>
@@ -406,6 +413,7 @@ footer{border-top:1px solid var(--hair);padding:36px 0 120px;color:#6f6984;font-
         <button type="submit" id="go">UNLOCK THE DOORS</button>
         <div class="err" id="err" role="alert"></div>
         <div class="fine">We only use your info to tell you about this music. Never sold. Unsubscribe anytime.</div>
+        <a href="#" class="skip" id="skipGate">I’ll stay outside for now</a>
       </form>
     </div>
   </section>
@@ -689,8 +697,12 @@ function beamSound(){
 }
 
 $("#enter").addEventListener("click", () => {
-  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); startBed(); setTimeout(whoop, 600); setTimeout(clownShow, 1500);
+  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); startBed(); setTimeout(whoop, 600);
+  // page 2 = signup for anyone not in yet; members go straight to page 3
+  if (document.body.classList.contains("unlocked")) setTimeout(clownShow, 1500); else document.body.classList.add("step2");
 });
+function toLanding(){ if (!document.body.classList.contains("step2")) return; document.body.classList.remove("step2"); scrollTo(0, 0); setTimeout(clownShow, 900); }
+$("#skipGate").addEventListener("click", e => { e.preventDefault(); toLanding(); });
 $("#mute").addEventListener("click", () => {
   muted = !muted; $("#mute").textContent = muted ? "SOUND: OFF" : "SOUND: ON";
   setStreet(!muted);
@@ -715,7 +727,7 @@ $("#gate").addEventListener("submit", async e => {
   try {
     if (CONFIG.SIGNUP_ENDPOINT.startsWith("http")) await fetch(CONFIG.SIGNUP_ENDPOINT, {method:"POST", mode:"no-cors", body:data});
     const m = {name: name || "Member", no, joined: new Date().toISOString()};
-    store.set("cldh_member", JSON.stringify(m)); whoop(); unlock(m); $("#join").scrollIntoView({behavior:"smooth"});
+    store.set("cldh_member", JSON.stringify(m)); whoop(); unlock(m); toLanding(); $("#join").scrollIntoView({behavior:"smooth"});
   } catch { err.textContent = "Couldn't connect. Check your signal and try again."; }
   finally { btn.disabled = false; btn.textContent = "UNLOCK THE DOORS"; }
 });
