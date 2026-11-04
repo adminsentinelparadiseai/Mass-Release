@@ -675,7 +675,7 @@ function startBed(){
   } catch (e) {}
   bed.playbackRate = BED_RATE; bed.play().catch(() => {});
 }
-// sirens open loud for INTRO_MS, then drop to a faint bed once the song starts
+// sirens are off: the song starts on tap. INTRO_MS is how long the UFO hovers before it leaves
 const STREET_VOL = .006, HELI_VOL = .02, INTRO_STREET = .2, INTRO_HELI = .35, INTRO_MS = 6500;
 function duckStreet(){ const t = ac.currentTime; sirenGain.gain.setTargetAtTime(STREET_VOL, t, .5); heliGain.gain.setTargetAtTime(HELI_VOL, t, .5); }
 function setStreet(on){ if (sirenGain) sirenGain.gain.value = on ? STREET_VOL : 0; if (heliGain) heliGain.gain.value = on ? HELI_VOL : 0; }
@@ -757,8 +757,7 @@ function beamSound(){
 }
 
 $("#enter").addEventListener("click", () => {
-  $("#enter").remove(); $("#mute").style.display = "block"; startAudio(); setTimeout(whoop, 600); craftShow();
-  setTimeout(() => { startBed(); if (muted) bed.pause(); else duckStreet(); }, INTRO_MS);
+  $("#enter").remove(); $("#mute").style.display = "block"; ac = new (window.AudioContext || window.webkitAudioContext)(); startBed(); craftShow();
   // page 2 = signup for anyone not in yet; members go straight to page 3
   if (!document.body.classList.contains("unlocked")) document.body.classList.add("step2");
 });
@@ -788,7 +787,7 @@ $("#gate").addEventListener("submit", async e => {
   try {
     if (CONFIG.SIGNUP_ENDPOINT.startsWith("http")) await fetch(CONFIG.SIGNUP_ENDPOINT, {method:"POST", mode:"no-cors", body:data});
     const m = {name: name || "Member", no, joined: new Date().toISOString()};
-    store.set("cldh_member", JSON.stringify(m)); whoop(); unlock(m); toLanding(); $("#join").scrollIntoView({behavior:"smooth"});
+    store.set("cldh_member", JSON.stringify(m)); unlock(m); toLanding(); $("#join").scrollIntoView({behavior:"smooth"});
   } catch { err.textContent = "Couldn't connect. Check your signal and try again."; }
   finally { btn.disabled = false; btn.textContent = "UNLOCK THE DOORS"; }
 });
