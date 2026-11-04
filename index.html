@@ -757,7 +757,7 @@ function beamSound(){
 }
 
 $("#enter").addEventListener("click", () => {
-  $("#enter").remove(); $("#mute").style.display = "block"; ac = new (window.AudioContext || window.webkitAudioContext)(); startBed(); craftShow();
+  $("#enter").remove(); $("#mute").style.display = "block"; ac = new (window.AudioContext || window.webkitAudioContext)(); startBed(); // UFO intro off until there is a real render: craftShow();
   // page 2 = signup for anyone not in yet; members go straight to page 3
   if (!document.body.classList.contains("unlocked")) document.body.classList.add("step2");
 });
